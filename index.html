@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#050505] antialiased">
+<html lang="en" class="bg-[#030303]">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghaidak Alosh | Visual Systems Engineer</title>
-    <meta name="description" content="Senior Visual Designer based in Damascus. Specializing in high-velocity branding and motion systems.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GHAIDAK ALOSH | VISUAL ARCHITECT</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -20,14 +20,13 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            bg: '#050505',
-                            accent: '#7C3AED', /* Deep Electric Violet */
-                            acid: '#CCFF00',   /* Cyber Acid (Hover states) */
-                        }
+                        void: '#030303',
+                        neon: '#CCFF00',   /* Cyber Acid */
+                        holo: '#00FFFF',   /* Hologram Blue */
+                        error: '#FF003C',  /* Glitch Red */
                     },
-                    backgroundImage: {
-                        'grain': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.07%22/%3E%3C/svg%3E')",
+                    cursor: {
+                        none: 'none',
                     }
                 }
             }
@@ -35,237 +34,251 @@
     </script>
 
     <style>
-        /* --- 1. CORE PHYSICS & TYPOGRAPHY --- */
-        body { 
-            cursor: none; 
-            overflow-x: hidden; 
-            background-color: #050505;
-            color: #EDEDED;
-        }
-
+        /* --- CORE PHYSICS --- */
+        body { margin: 0; overflow-x: hidden; cursor: none; background: #030303; color: #EEE; }
         ::selection { background: #CCFF00; color: #000; }
-
-        /* RGB SPLIT / GLITCH EFFECT ON HOVER */
-        .glitch-hover { position: relative; display: inline-block; transition: color 0.3s; }
-        .glitch-hover::before, .glitch-hover::after {
-            content: attr(data-text);
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; transition: all 0.3s; pointer-events: none;
-        }
-        .glitch-hover:hover { color: #CCFF00; }
-        .glitch-hover:hover::before { opacity: 0.6; transform: translate(-3px, 0); color: #FF0055; clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); }
-        .glitch-hover:hover::after { opacity: 0.6; transform: translate(3px, 0); color: #00FFFF; clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); }
-
-        /* --- 2. CANVAS BACKGROUND --- */
-        #warp-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; opacity: 0.4; pointer-events: none;
-        }
-
-        /* --- 3. PROJECT CARD HOVERS (CINEMATIC) --- */
-        .project-card:hover .card-img { transform: scale(1.05); filter: contrast(1.2) grayscale(0); }
-        .project-card .card-img { 
-            filter: contrast(1.1) grayscale(100%); 
-            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-        }
-        .project-card:hover .card-overlay { opacity: 0.4; }
-
-        /* --- 4. CUSTOM CURSOR SYSTEM --- */
-        .cursor-outer {
-            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 50%;
-            pointer-events: none; z-index: 9999; mix-blend-mode: difference;
-            transition: width 0.3s, height 0.3s, border-color 0.3s;
-        }
-        .cursor-inner {
-            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
-            background: #CCFF00; border-radius: 50%;
-            pointer-events: none; z-index: 9999;
-        }
-        body.hovering .cursor-outer { width: 80px; height: 80px; border-color: #CCFF00; background: rgba(204, 255, 0, 0.05); }
-
-        /* --- 5. SMOOTH SCROLL --- */
+        
+        /* SMOOTH SCROLL CONTAINER */
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
 
-        /* --- 6. UTILITIES --- */
-        .blend-difference { mix-blend-mode: difference; }
+        /* --- UI ELEMENTS --- */
+        .scramble-text { display: inline-block; white-space: nowrap; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* --- IMAGES & REVEALS --- */
+        .img-reveal-mask {
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .is-inview .img-reveal-mask { clip-path: inset(0 0 0 0); }
+        
+        .img-zoom {
+            transform: scale(1.4);
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), filter 0.5s ease;
+            filter: grayscale(100%) contrast(1.2);
+        }
+        .project-card:hover .img-zoom { transform: scale(1); filter: grayscale(0%) contrast(1.1); }
+
+        /* --- CUSTOM CURSOR --- */
+        #cursor {
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+            mix-blend-mode: difference;
+        }
+        .cursor-circle {
+            width: 20px; height: 20px; border: 1px solid #CCFF00; border-radius: 50%;
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        .cursor-text {
+            position: absolute; top: -30px; left: 20px; font-family: 'JetBrains Mono'; 
+            font-size: 10px; color: #CCFF00; white-space: nowrap; opacity: 0;
+            transition: opacity 0.2s;
+        }
+        body.hover-active .cursor-circle { width: 60px; height: 60px; background: rgba(204, 255, 0, 0.1); border-color: transparent; }
+        body.hover-active .cursor-text { opacity: 1; }
+
+        /* --- SCANLINE OVERLAY --- */
+        .scanlines {
+            position: fixed; inset: 0; pointer-events: none; z-index: 50;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px;
+            opacity: 0.15;
+        }
+
+        /* --- LOADER --- */
+        #loader {
+            position: fixed; inset: 0; background: #000; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .loader-bar { width: 0%; height: 2px; background: #CCFF00; transition: width 0.1s linear; }
+
+        /* --- DISTORTION TEXT --- */
+        .distort-hover { transition: transform 0.3s; display: inline-block; }
+        .project-card:hover .distort-hover { transform: translateX(10px) skewX(-10deg); color: #CCFF00; }
+
     </style>
 </head>
-<body class="bg-brand-bg">
+<body class="font-sans antialiased">
 
-    <div class="fixed inset-0 bg-grain pointer-events-none z-50"></div>
-    <canvas id="warp-canvas"></canvas>
-    
-    <div class="cursor-outer hidden md:block"></div>
-    <div class="cursor-inner hidden md:block"></div>
-
-    <nav class="fixed top-0 w-full z-40 px-6 py-8 flex justify-between items-center mix-blend-difference">
-        <a href="#" class="magnetic-area font-display font-bold text-2xl tracking-tighter text-white">
-            GHAIDAK.
-        </a>
-        
-        <div class="flex items-center gap-8">
-            <div class="hidden md:flex flex-col items-end text-[10px] font-mono tracking-widest text-brand-acid/80 uppercase">
-                <span>Status: Operational</span>
-                <span class="text-white/50">Damascus, SY</span>
+    <div id="audio-controls" class="fixed bottom-8 left-8 z-50 mix-blend-difference cursor-pointer magnetic-btn group">
+        <div class="flex items-center gap-3">
+            <div class="flex items-end gap-1 h-4">
+                <div class="w-1 bg-neon h-full animate-pulse"></div>
+                <div class="w-1 bg-neon h-2/3 animate-[pulse_0.8s_ease-in-out_infinite]"></div>
+                <div class="w-1 bg-neon h-1/2 animate-[pulse_1.2s_ease-in-out_infinite]"></div>
             </div>
-            
-            <a href="mailto:ghaidakalosh008@gmail.com" class="magnetic-area px-6 py-2 border border-white/20 rounded-full group overflow-hidden relative">
-                <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-                <span class="relative font-mono text-xs uppercase tracking-widest text-white group-hover:text-black transition-colors z-10">
-                    Initiate Contact
+            <span class="font-mono text-[10px] uppercase text-neon tracking-widest group-hover:text-white transition-colors">
+                Audio: <span id="audio-status">Active</span>
+            </span>
+        </div>
+    </div>
+
+    <div id="loader">
+        <div class="font-mono text-xs text-neon mb-4 tracking-widest">INITIALIZING NEURAL LINK...</div>
+        <div class="w-64 h-[2px] bg-white/10 overflow-hidden">
+            <div class="loader-bar" id="loader-bar"></div>
+        </div>
+        <div class="absolute bottom-10 font-mono text-[10px] text-white/30">
+            SYSTEM: GHAIDAK_OS V2.5 [DAMASCUS_SERVER]
+        </div>
+    </div>
+
+    <div class="scanlines"></div>
+    <div id="cursor">
+        <div class="cursor-circle"></div>
+        <div class="cursor-text">VIEW_DATA</div>
+    </div>
+
+    <canvas id="webgl" class="fixed inset-0 z-0 opacity-40"></canvas>
+
+    <nav class="fixed top-0 w-full z-40 px-6 py-8 flex justify-between items-start mix-blend-difference">
+        <div class="font-mono text-xs leading-tight">
+            <div class="scramble-onload text-white font-bold" data-final="GHAIDAK ALOSH">XJKSDA LWOPS</div>
+            <div class="text-white/50">VISUAL SYSTEMS ENGINEER</div>
+        </div>
+        
+        <div class="flex flex-col items-end gap-2">
+            <a href="mailto:ghaidakalosh008@gmail.com" class="magnetic-btn px-4 py-2 border border-white/20 rounded-none bg-black/50 backdrop-blur-sm hover:bg-neon hover:border-neon hover:text-black transition-all duration-300 group">
+                <span class="font-mono text-[10px] uppercase tracking-widest flex items-center gap-2">
+                    <span class="w-1 h-1 bg-neon group-hover:bg-black"></span>
+                    Hire Me
                 </span>
             </a>
+            <div class="font-mono text-[9px] text-neon uppercase tracking-widest blink">
+                Available Q1 2026
+            </div>
         </div>
     </nav>
 
-    <main class="relative z-10">
-        <section class="min-h-screen flex flex-col justify-center px-4 md:px-12 pt-20">
-            <div class="w-full max-w-[1600px] mx-auto">
+    <main class="relative z-10 w-full">
+
+        <section class="min-h-screen flex items-center px-4 md:px-12 relative overflow-hidden">
+            <div class="w-full max-w-[1600px] mx-auto pt-20">
                 
-                <div class="relative z-20 mix-blend-difference">
-                    <h1 class="font-display font-semibold text-[14vw] leading-[0.8] tracking-[-0.04em] text-white">
-                        <div class="overflow-hidden"><span class="hero-line block">VISUAL</span></div>
-                        <div class="overflow-hidden flex items-center gap-4">
-                            <span class="hero-line block text-brand-acid glitch-hover" data-text="SYSTEMS">SYSTEMS</span>
-                            <span class="hidden md:block h-[1px] flex-grow bg-white/20 mt-8 origin-left scale-x-0 animate-line"></span>
+                <div class="relative">
+                    <h1 class="font-display font-bold text-[13vw] leading-[0.8] tracking-[-0.03em] text-white mix-blend-overlay opacity-50 absolute top-0 left-0 blur-xl select-none">
+                        SYSTEMS
+                    </h1>
+                    <h1 class="font-display font-bold text-[13vw] leading-[0.8] tracking-[-0.03em] text-white relative z-20">
+                        <div class="overflow-hidden"><span class="reveal-hero block">VISUAL</span></div>
+                        <div class="overflow-hidden"><span class="reveal-hero block text-transparent stroke-text hover:text-neon transition-colors duration-500 cursor-none" style="-webkit-text-stroke: 2px white;">SYSTEMS</span></div>
+                        <div class="overflow-hidden flex items-center gap-4 md:gap-12">
+                            <span class="reveal-hero block text-neon">ARCHITECT</span>
+                            <div class="reveal-hero hidden md:flex items-center gap-4">
+                                <span class="h-[2px] w-24 bg-white/20"></span>
+                                <span class="font-mono text-xs text-white/50 tracking-wide max-w-[200px] leading-relaxed">
+                                    I don't build websites. I engineer digital dominance.
+                                </span>
+                            </div>
                         </div>
-                        <div class="overflow-hidden"><span class="hero-line block text-outline-transparent stroke-white" style="-webkit-text-stroke: 1px rgba(255,255,255,0.5); color: transparent;">ENGINEER</span></div>
                     </h1>
                 </div>
 
-                <div class="flex flex-col md:flex-row justify-between items-end mt-24 gap-12 border-t border-white/10 pt-8">
-                    <div class="max-w-lg fade-in opacity-0">
-                        <p class="font-sans text-white/60 text-lg leading-relaxed">
-                            <span class="text-brand-acid">Senior Visual Designer</span> based in Syria. <br>
-                            I build high-performance brand architectures and motion systems for the next generation of digital agencies.
-                        </p>
+                <div class="mt-24 grid md:grid-cols-12 gap-8 border-t border-white/10 pt-8">
+                    <div class="md:col-span-3 font-mono text-[10px] text-white/40 uppercase tracking-widest">
+                        <div class="mb-2">Location</div>
+                        <div class="text-white">Damascus, SY</div>
                     </div>
-                    <div class="flex gap-12 text-xs font-mono uppercase tracking-widest text-white/40 fade-in opacity-0">
-                        <div>
-                            <span class="block text-brand-acid mb-1">Experience</span>
-                            6+ Years
-                        </div>
-                        <div>
-                            <span class="block text-brand-acid mb-1">Focus</span>
-                            Brand & Motion
-                        </div>
+                    <div class="md:col-span-3 font-mono text-[10px] text-white/40 uppercase tracking-widest">
+                        <div class="mb-2">Specialty</div>
+                        <div class="text-white">Brand / Motion / UI</div>
+                    </div>
+                    <div class="md:col-span-6 font-sans text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl">
+                        A senior creative partner for agencies that refuse to be boring. Merging 6+ years of graphic precision with high-velocity motion design.
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <div class="py-8 bg-brand-acid transform -rotate-1 scale-105 z-20 relative border-y-4 border-black">
-            <div class="marquee-wrapper flex whitespace-nowrap overflow-hidden text-black">
-                <div class="marquee-content flex items-center gap-12 px-6 font-display font-black text-4xl uppercase tracking-tight">
-                    <span>Clientero KSA</span> <span class="text-xl">★</span>
-                    <span>SyrproNet</span> <span class="text-xl">★</span>
-                    <span>Vera</span> <span class="text-xl">★</span>
-                    <span>Vision 2030</span> <span class="text-xl">★</span>
-                    <span>Clientero KSA</span> <span class="text-xl">★</span>
-                    <span>SyrproNet</span> <span class="text-xl">★</span>
-                    <span>Vera</span> <span class="text-xl">★</span>
-                    <span>Vision 2030</span> <span class="text-xl">★</span>
-                </div>
-            </div>
-        </div>
-
-        <section class="py-32 px-4 md:px-12">
-            <div class="max-w-[1400px] mx-auto">
-                <div class="flex items-center gap-4 mb-24">
-                    <div class="w-3 h-3 bg-brand-acid"></div>
-                    <h2 class="font-mono text-sm uppercase tracking-widest text-white/50">Selected Intelligence (2025-26)</h2>
-                </div>
-
-                <a href="https://www.behance.net/ghaidakalo5fb4" target="_blank" class="block project-card group mb-40 magnetic-area">
-                    <div class="grid md:grid-cols-12 gap-8 items-center">
-                        <div class="md:col-span-8 relative aspect-[16/9] overflow-hidden bg-[#111]">
-                            <div class="card-img absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2700&auto=format&fit=crop')] bg-cover bg-center"></div>
-                            <div class="card-overlay absolute inset-0 bg-brand-accent mix-blend-overlay opacity-0 transition-opacity duration-500"></div>
-                            
-                            <div class="absolute top-6 left-6 bg-black/80 backdrop-blur px-4 py-2 border border-white/10">
-                                <span class="font-mono text-xs text-brand-acid">SAAS / BRANDING</span>
-                            </div>
-                        </div>
-
-                        <div class="md:col-span-4 pl-4 md:pl-8 border-l border-white/10 h-full flex flex-col justify-between py-2">
-                            <div>
-                                <h3 class="font-display text-4xl md:text-5xl text-white mb-4 group-hover:text-brand-acid transition-colors">Clientero</h3>
-                                <p class="font-sans text-white/50 text-sm leading-relaxed max-w-xs">
-                                    Reinventing the visual language for Saudi Arabia's leading e-invoicing platform. 
-                                </p>
-                            </div>
-                            <div class="mt-8">
-                                <span class="inline-flex items-center gap-2 font-mono text-xs text-brand-acid uppercase border-b border-brand-acid pb-1">
-                                    View Case Study ↗
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="https://www.behance.net/ghaidakalo5fb4" target="_blank" class="block project-card group mb-12 magnetic-area">
-                    <div class="grid md:grid-cols-12 gap-8 items-center">
-                        <div class="md:col-span-4 pr-4 md:pr-8 border-r border-white/10 h-full flex flex-col justify-between py-2 order-2 md:order-1 text-right">
-                            <div>
-                                <h3 class="font-display text-4xl md:text-5xl text-white mb-4 group-hover:text-brand-acid transition-colors">SyrproNet</h3>
-                                <p class="font-sans text-white/50 text-sm leading-relaxed ml-auto max-w-xs">
-                                    Unified enterprise identity system. Bridging legacy infrastructure with modern digital presence.
-                                </p>
-                            </div>
-                            <div class="mt-8 flex justify-end">
-                                <span class="inline-flex items-center gap-2 font-mono text-xs text-brand-acid uppercase border-b border-brand-acid pb-1">
-                                    View Case Study ↗
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="md:col-span-8 relative aspect-[16/9] overflow-hidden bg-[#111] order-1 md:order-2">
-                             <div class="card-img absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center"></div>
-                             <div class="card-overlay absolute inset-0 bg-brand-acid mix-blend-overlay opacity-0 transition-opacity duration-500"></div>
-                             
-                             <div class="absolute top-6 right-6 bg-black/80 backdrop-blur px-4 py-2 border border-white/10">
-                                <span class="font-mono text-xs text-brand-acid">ENTERPRISE / IDENTITY</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
 
             </div>
         </section>
 
-        <footer class="bg-white text-black py-24 px-6 md:px-12 relative overflow-hidden">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <section class="py-32 border-t border-white/5 relative bg-[#050505]" id="work-section">
+            <div class="px-6 md:px-12 mb-16 flex items-end justify-between">
+                <h2 class="font-display text-4xl text-white">SELECTED DATA</h2>
+                <div class="font-mono text-xs text-neon">[ SCROLL TO DECRYPT ]</div>
+            </div>
+
+            <div class="flex flex-col gap-32 px-4 md:px-12 max-w-[1400px] mx-auto">
+
+                <article class="project-card group relative cursor-none">
+                    <a href="https://www.behance.net/ghaidakalosh008" target="_blank" class="block">
+                        <div class="grid md:grid-cols-12 gap-8 items-center">
+                            <div class="md:col-span-7 relative overflow-hidden aspect-video img-reveal-mask">
+                                <div class="absolute inset-0 bg-neon/20 z-10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <img src="https://images.unsplash.com/photo-1481487484168-9b930d5b7960?q=80&w=2670&auto=format&fit=crop" class="img-zoom w-full h-full object-cover" alt="Clientero">
+                                <div class="absolute bottom-0 left-0 p-6 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">
+                                    <span class="bg-black/80 text-neon px-3 py-1 font-mono text-[10px] uppercase border border-neon">
+                                        View Case Study
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="md:col-span-5 relative z-20 pointer-events-none">
+                                <h3 class="font-display text-5xl md:text-7xl font-bold text-white mb-4 mix-blend-difference distort-hover">
+                                    CLIENTERO
+                                </h3>
+                                <div class="flex flex-col gap-4 border-l border-white/20 pl-6">
+                                    <p class="font-sans text-white/60 text-sm max-w-sm">
+                                        Total brand overhaul for the Saudi Fintech giant. Achieving a 200% increase in user retention through motion-led UI.
+                                    </p>
+                                    <ul class="flex gap-4 font-mono text-[10px] text-neon uppercase tracking-widest">
+                                        <li>Strategy</li>
+                                        <li>Motion</li>
+                                        <li>Web</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="project-card group relative cursor-none">
+                    <a href="https://www.behance.net/ghaidakalosh008" target="_blank" class="block">
+                        <div class="grid md:grid-cols-12 gap-8 items-center">
+                            <div class="md:col-span-5 order-2 md:order-1 relative z-20 pointer-events-none text-right">
+                                <h3 class="font-display text-5xl md:text-7xl font-bold text-white mb-4 mix-blend-difference distort-hover">
+                                    SYRPRO
+                                </h3>
+                                <div class="flex flex-col gap-4 border-r border-white/20 pr-6 items-end">
+                                    <p class="font-sans text-white/60 text-sm max-w-sm">
+                                        Corporate identity system unification. Cleaning up the legacy mess and installing a future-proof design language.
+                                    </p>
+                                    <ul class="flex gap-4 font-mono text-[10px] text-neon uppercase tracking-widest">
+                                        <li>Identity</li>
+                                        <li>Guidelines</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="md:col-span-7 order-1 md:order-2 relative overflow-hidden aspect-video img-reveal-mask">
+                                <div class="absolute inset-0 bg-neon/20 z-10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2680&auto=format&fit=crop" class="img-zoom w-full h-full object-cover" alt="Syrpro">
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+        <footer class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-white text-black">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10"></div>
             
-            <div class="max-w-[1400px] mx-auto relative z-10">
-                <div class="grid md:grid-cols-2 gap-12">
-                    <div>
-                        <span class="font-mono text-xs uppercase tracking-widest text-black/50 mb-4 block">Availability</span>
-                        <h2 class="font-display font-bold text-[8vw] leading-[0.9] tracking-tighter mb-8">
-                            Q1 2026 <br> OPEN.
-                        </h2>
-                        <a href="mailto:ghaidakalosh008@gmail.com" class="magnetic-area inline-block px-8 py-4 bg-black text-white font-mono text-sm uppercase rounded-full hover:bg-brand-accent transition-colors">
-                            ghaidakalosh008@gmail.com
-                        </a>
-                    </div>
-                    
-                    <div class="flex flex-col justify-end items-end text-right">
-                        <div class="font-display text-2xl font-bold mb-2" id="damascus-time">00:00</div>
-                        <div class="font-mono text-xs uppercase text-black/50 tracking-widest">Damascus, Syria (GMT+3)</div>
-                        
-                        <div class="mt-12 flex gap-6 font-mono text-sm underline">
-                            <a href="#" class="hover:text-brand-accent transition-colors">Behance</a>
-                            <a href="#" class="hover:text-brand-accent transition-colors">LinkedIn</a>
-                            <a href="#" class="hover:text-brand-accent transition-colors">Instagram</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-24 pt-8 border-t border-black/10 flex justify-between font-mono text-[10px] uppercase tracking-widest text-black/50">
-                    <span>© Ghaidak Alosh 2026</span>
-                    <span>System v2.0</span>
-                </div>
+            <div class="relative z-10 text-center">
+                <div class="font-mono text-xs uppercase tracking-widest mb-6">End Simulation</div>
+                <h2 class="font-display font-bold text-[10vw] leading-none mb-8 tracking-tighter hover:text-neon transition-colors duration-300 cursor-pointer magnetic-btn" onclick="window.location.href='mailto:ghaidakalosh008@gmail.com'">
+                    START<br>PROJECT
+                </h2>
+                <a href="mailto:ghaidakalosh008@gmail.com" class="inline-block font-mono text-sm border-b border-black pb-1 hover:text-neon hover:border-neon transition-colors">
+                    ghaidakalosh008@gmail.com
+                </a>
+            </div>
+
+            <div class="absolute bottom-8 w-full px-12 flex justify-between font-mono text-[10px] uppercase tracking-widest">
+                <div>© 2026 Ghaidak Alosh</div>
+                <div id="local-time">00:00:00 GMT+3</div>
             </div>
         </footer>
 
@@ -274,96 +287,204 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 
     <script>
-        // --- 1. SETUP & UTILS ---
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // Lenis Smooth Scroll
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smooth: true,
-        });
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
+        // --- 1. AUDIO SYNTHESIZER (The "Entertainment" Factor) ---
+        // We use Web Audio API directly to avoid loading files.
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let audioEnabled = true;
 
-        // --- 2. CUSTOM CURSOR & MAGNETIC ---
-        const cursorOuter = document.querySelector('.cursor-outer');
-        const cursorInner = document.querySelector('.cursor-inner');
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
+        function playSound(type) {
+            if (!audioEnabled) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'hover') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'click') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            }
+        }
+
+        document.getElementById('audio-controls').addEventListener('click', () => {
+            audioEnabled = !audioEnabled;
+            document.getElementById('audio-status').innerText = audioEnabled ? "Active" : "Muted";
+            document.getElementById('audio-controls').classList.toggle('opacity-50');
+        });
+
+        // --- 2. LOADER SEQUENCE ---
+        const loaderBar = document.getElementById('loader-bar');
+        const loader = document.getElementById('loader');
+        
+        let progress = 0;
+        const loadInterval = setInterval(() => {
+            progress += Math.random() * 5;
+            if(progress > 100) progress = 100;
+            loaderBar.style.width = progress + "%";
+            
+            if(progress === 100) {
+                clearInterval(loadInterval);
+                playSound('click');
+                
+                gsap.to(loader, {
+                    yPercent: -100,
+                    duration: 1.2,
+                    ease: "power4.inOut",
+                    onComplete: initSite
+                });
+            }
+        }, 30);
+
+        function initSite() {
+            // Text scramble effect
+            document.querySelectorAll('.scramble-onload').forEach(el => {
+                const final = el.getAttribute('data-final');
+                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+                let iterations = 0;
+                const interval = setInterval(() => {
+                    el.innerText = final.split("").map((letter, index) => {
+                        if(index < iterations) return final[index];
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    }).join("");
+                    if(iterations >= final.length) clearInterval(interval);
+                    iterations += 1/2; 
+                }, 30);
+            });
+
+            // Hero Animation
+            gsap.from(".reveal-hero", {
+                yPercent: 120,
+                duration: 1.5,
+                stagger: 0.1,
+                ease: "power4.out"
+            });
+        }
+
+        // --- 3. CUSTOM CURSOR & MAGNETIC ---
+        const cursor = document.getElementById('cursor');
+        const cursorCircle = cursor.querySelector('.cursor-circle');
+        const cursorText = cursor.querySelector('.cursor-text');
+
+        let mouse = { x: 0, y: 0 };
+        let curPos = { x: 0, y: 0 };
 
         window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
             
-            // Instant inner cursor
-            gsap.to(cursorInner, { x: mouseX - 3, y: mouseY - 3, duration: 0 });
-            
-            // Dragged outer cursor
-            gsap.to(cursorOuter, { x: mouseX - 20, y: mouseY - 20, duration: 0.15 });
+            // Text Logic
+            const target = e.target;
+            if(target.closest('a') || target.closest('button') || target.classList.contains('magnetic-btn')) {
+                document.body.classList.add('hover-active');
+                if(target.closest('.project-card')) {
+                    cursorText.innerText = "OPEN_CASE";
+                    playSound('hover'); // Sound on hover
+                } else {
+                    cursorText.innerText = "";
+                }
+            } else {
+                document.body.classList.remove('hover-active');
+            }
         });
 
-        // Magnetic Effect
-        document.querySelectorAll('.magnetic-area').forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                document.body.classList.add('hovering');
-                gsap.to(cursorOuter, { scale: 1.5, duration: 0.3 });
-            });
-            btn.addEventListener('mouseleave', () => {
-                document.body.classList.remove('hovering');
-                gsap.to(cursorOuter, { scale: 1, duration: 0.3 });
-                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-            });
+        // Smooth Cursor Follow
+        function updateCursor() {
+            const dt = 1.0 - Math.pow(1.0 - 0.15, 1); // Lerp factor
+            curPos.x += (mouse.x - curPos.x) * 0.15;
+            curPos.y += (mouse.y - curPos.y) * 0.15;
+            
+            cursor.style.transform = `translate(${curPos.x - 10}px, ${curPos.y - 10}px)`; // Center adjustment
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
+        // Magnetic Buttons
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.2 });
+                gsap.to(btn, { x: x * 0.5, y: y * 0.5, duration: 0.2 });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+            });
+            btn.addEventListener('click', () => playSound('click'));
+        });
+
+        // --- 4. SCROLL ANIMATIONS (GSAP + LENIS) ---
+        gsap.registerPlugin(ScrollTrigger);
+        
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            ScrollTrigger.update();
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Skew Effect on Scroll
+        let proxy = { skew: 0 },
+            skewSetter = gsap.quickSetter(".project-card", "skewY", "deg"),
+            clamp = gsap.utils.clamp(-20, 20);
+
+        ScrollTrigger.create({
+            onUpdate: (self) => {
+                let skew = clamp(self.getVelocity() / -300);
+                if (Math.abs(skew) > Math.abs(proxy.skew)) {
+                    proxy.skew = skew;
+                    gsap.to(proxy, {skew: 0, duration: 0.8, ease: "power3", overwrite: true, onUpdate: () => skewSetter(proxy.skew)});
+                }
+            }
+        });
+
+        // Reveal Images on Scroll
+        document.querySelectorAll('.project-card').forEach(card => {
+            ScrollTrigger.create({
+                trigger: card,
+                start: "top 80%",
+                onEnter: () => card.querySelector('.img-reveal-mask').parentElement.classList.add('is-inview')
             });
         });
 
-        // --- 3. HERO ANIMATIONS ---
-        const tl = gsap.timeline();
-        tl.from(".hero-line", {
-            y: 150,
-            skewY: 7,
-            duration: 1.5,
-            stagger: 0.15,
-            ease: "power4.out",
-            delay: 0.2
-        })
-        .to(".animate-line", {
-            scaleX: 1,
-            duration: 1,
-            ease: "expo.out"
-        }, "-=1")
-        .to(".fade-in", {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.2
-        }, "-=0.5");
+        // --- 5. TIME DISPLAY ---
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Damascus'
+            });
+            document.getElementById('local-time').innerText = timeString + " GMT+3";
+        }
+        setInterval(updateTime, 1000);
 
-        // --- 4. MARQUEE ---
-        gsap.to(".marquee-content", {
-            xPercent: -50,
-            repeat: -1,
-            duration: 15,
-            ease: "linear"
-        });
-
-        // --- 5. CANVAS WARP BACKGROUND (The "Striking" Part) ---
-        const canvas = document.getElementById('warp-canvas');
+        // --- 6. BACKGROUND CANVAS (STARFIELD) ---
+        const canvas = document.getElementById('webgl');
         const ctx = canvas.getContext('2d');
-        
         let width, height;
-        let particles = [];
-        
+
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -371,97 +492,28 @@
         window.addEventListener('resize', resize);
         resize();
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 2;
-                this.speedX = 0;
-                this.speedY = 0;
-            }
-            update() {
-                // Mouse influence
-                const dx = mouseX - this.x;
-                const dy = mouseY - this.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                const force = Math.max(0, (300 - dist) / 300); // 300px radius
-                
-                // Move away from mouse
-                if (dist < 300) {
-                    this.speedX -= (dx / dist) * force * 0.5;
-                    this.speedY -= (dy / dist) * force * 0.5;
-                }
+        const stars = Array.from({ length: 100 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 2,
+            speed: Math.random() * 0.5 + 0.1
+        }));
 
-                // Friction and natural movement
-                this.x += this.speedX + (Math.random() - 0.5) * 0.2;
-                this.y += this.speedY + (Math.random() - 0.5) * 0.2;
-                
-                this.speedX *= 0.95;
-                this.speedY *= 0.95;
-
-                // Wrap around
-                if (this.x < 0) this.x = width;
-                if (this.x > width) this.x = 0;
-                if (this.y < 0) this.y = height;
-                if (this.y > height) this.y = 0;
-            }
-            draw() {
-                ctx.fillStyle = `rgba(124, 58, 237, ${Math.abs(this.speedX) * 0.5 + 0.2})`; // Violet tint based on speed
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < 150; i++) {
-                particles.push(new Particle());
-            }
-        }
-        initParticles();
-
-        function animateCanvas() {
+        function animateStars() {
             ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
             
-            // Draw connecting lines
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
-            ctx.lineWidth = 1;
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
+            stars.forEach(star => {
+                star.y -= star.speed + (mouse.y / height); // Stars move faster based on mouse Y
+                if(star.y < 0) star.y = height;
+                
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
             });
-
-            // Connect nearby particles
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    
-                    if (dist < 100) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animateCanvas);
+            requestAnimationFrame(animateStars);
         }
-        animateCanvas();
-
-        // --- 6. DAMASCUS TIME ---
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', {
-                hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Damascus'
-            });
-            document.getElementById('damascus-time').innerText = timeString;
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
+        animateStars();
 
     </script>
 </body>
