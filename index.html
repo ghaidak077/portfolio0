@@ -1,294 +1,273 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-[#05010D] antialiased selection:bg-[#5D3FD3] selection:text-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ghaidak Alosh - Senior Revenue Architect.">
-    <title>GHAIDAK ALOSH | REVENUE ARCHITECT</title>
+    <title>GHAIDAK ALOSH | SENIOR BRAND SYSTEMS</title>
     
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['General Sans', 'sans-serif'],
+                        display: ['Clash Display', 'sans-serif'],
+                    },
+                    colors: {
+                        void: '#05010D',
+                        royal: '#5D3FD3', /* The "Crown" Color */
+                        mist: '#BFA3FF',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                    },
+                    backgroundImage: {
+                        'gradient-royal': 'linear-gradient(135deg, #5D3FD3 0%, #05010D 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* --- THE LOGIC LAYER (CSS VARIABLES) --- */
-        :root {
-            --void: #050505;
-            --signal: #00FF41; /* The "Go" Signal */
-            --concrete: #888888;
-            --surface: #111111;
-            --text: #E5E5E5;
-            --font-display: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        /* --- THE RESET (BRUTALIST EFFICIENCY) --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background-color: var(--void); 
-            color: var(--text); 
-            font-family: var(--font-display); 
-            line-height: 1.4; 
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* --- TYPOGRAPHY (COGNITIVE HIERARCHY) --- */
-        h1, h2, h3 { font-weight: 800; letter-spacing: -0.03em; text-transform: uppercase; }
+        /* --- PHYSICS & MOTION --- */
+        body { margin: 0; overflow-x: hidden; color: #E0D4FC; cursor: none; }
         
-        .hero-text {
-            font-size: clamp(3rem, 10vw, 8rem); /* Fluid Typography */
-            line-height: 0.9;
-            margin-bottom: 2rem;
+        /* The "Noise" Texture (Adds Film Grain/Premium Feel) */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 50; mix-blend-mode: overlay;
         }
 
-        .strike { text-decoration: line-through; color: var(--concrete); opacity: 0.5; }
-        .highlight { color: var(--signal); }
+        /* Custom Cursor (The "Agency" Standard) */
+        .cursor-dot { width: 8px; height: 8px; background: #BFA3FF; position: fixed; border-radius: 50%; pointer-events: none; z-index: 100; mix-blend-mode: difference; }
+        .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(191, 163, 255, 0.5); position: fixed; border-radius: 50%; pointer-events: none; z-index: 100; transition: transform 0.2s ease-out; mix-blend-mode: difference; }
 
-        /* --- LAYOUT UTILITIES --- */
-        .container { max-width: 1200px; margin: 0 auto; px: 2rem; padding: 0 1.5rem; }
-        section { padding: 6rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-
-        /* --- SECTION 1: THE HERO (IMMEDIATE CAPTURE) --- */
-        .switch-container {
-            display: inline-flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 4rem;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: var(--concrete);
-        }
-        .checkbox-row { display: flex; align-items: center; gap: 1rem; }
-        .checkbox { 
-            width: 20px; height: 20px; border: 2px solid var(--concrete); 
-            display: inline-flex; align-items: center; justify-content: center;
-        }
-        .checkbox.active { border-color: var(--signal); background: var(--signal); color: black; font-weight: bold; }
-
-        /* --- SECTION 2: THE LOGIC GATE (COMPARISON GRID) --- */
-        .grid-comparison {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        @media (min-width: 768px) {
-            .grid-comparison { grid-template-columns: 1fr 1fr; }
-        }
+        /* Typography */
+        .hero-title { font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.95; letter-spacing: -0.02em; }
         
-        .col-them { border-left: 1px solid #333; padding-left: 2rem; opacity: 0.6; }
-        .col-me { border-left: 4px solid var(--signal); padding-left: 2rem; }
-        
-        .comp-item { margin-bottom: 2rem; }
-        .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--concrete); margin-bottom: 0.5rem; display: block; }
-        .value { font-size: 1.5rem; font-weight: 600; }
-
-        /* --- SECTION 3: THE WORK (CSS-ONLY TABS) --- */
-        .tabs { display: flex; flex-direction: column; }
-        
-        /* Hide radio inputs */
-        input[type=radio] { display: none; }
-        
-        /* Tab Labels */
-        .tab-labels { display: flex; gap: 2rem; border-bottom: 1px solid #333; margin-bottom: 3rem; }
-        .tab-label {
-            cursor: pointer;
-            padding-bottom: 1rem;
-            font-size: 1.2rem;
-            color: var(--concrete);
-            transition: color 0.2s;
-            border-bottom: 2px solid transparent;
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .tab-label:hover { color: white; }
-        
-        /* Logic for active tab styling */
-        #tab1:checked ~ .tab-labels label[for="tab1"],
-        #tab2:checked ~ .tab-labels label[for="tab2"] {
-            color: var(--signal);
-            border-bottom: 2px solid var(--signal);
+        .glass-card:hover {
+            border-color: var(--royal);
+            box-shadow: 0 0 50px rgba(93, 63, 211, 0.2);
+            transform: translateY(-5px);
         }
 
-        /* Tab Content Panels */
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
-        
-        /* Logic for showing content */
-        #tab1:checked ~ .content-sys { display: block; }
-        #tab2:checked ~ .content-growth { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .project-stat { font-family: monospace; color: var(--signal); margin-bottom: 1rem; }
-        .project-desc { max-width: 600px; font-size: 1.25rem; color: #ccc; }
-
-        /* --- SECTION 4: PRICING ANCHOR --- */
-        .pricing-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        .price-card { border: 1px solid #333; padding: 2rem; transition: transform 0.2s; }
-        .price-card.premium { border: 1px solid var(--signal); background: rgba(0,255,65,0.03); }
-        .price-num { font-size: 3rem; font-weight: 800; margin: 1rem 0; }
-
-        /* --- FOOTER --- */
-        footer { padding: 4rem 0; text-align: center; font-family: monospace; font-size: 0.8rem; color: var(--concrete); }
-        .status-dot { display: inline-block; width: 8px; height: 8px; background: var(--signal); border-radius: 50%; margin-right: 8px; animation: pulse 2s infinite; }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        
-        .cta-btn {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 1rem 2rem;
-            background: var(--signal);
-            color: black;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
+        /* Smooth Scroll Wrapper */
+        .reveal-text { transform: translateY(100%); opacity: 0; }
     </style>
 </head>
 <body>
 
-    <main class="container">
-        
-        <section style="min-height: 90vh; display: flex; flex-col; justify-content: center;">
-            <div class="switch-container">
-                <div class="checkbox-row">
-                    <div class="checkbox"></div>
-                    <span class="strike">I want a "Graphic Designer" ($30/hr)</span>
-                </div>
-                <div class="checkbox-row">
-                    <div class="checkbox active">X</div>
-                    <span style="color: white;">I want a Revenue Architect (High ROI)</span>
-                </div>
-            </div>
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
-            <h1 class="hero-text">
-                <span class="strike">GRAPHIC DESIGNER</span><br>
-                <span class="highlight">REVENUE</span><br>
-                ARCHITECT
-            </h1>
-            
-            <p style="font-size: 1.5rem; max-width: 700px; color: var(--concrete);">
-                Most designers make things pretty. I build Design Systems that lower your CAC and cut dev time by 40%.
-            </p>
-        </section>
+    <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+        <div class="font-display font-bold text-xl tracking-tight text-white">GHAIDAK<span class="text-royal">.</span></div>
+        <div class="hidden md:flex gap-8 font-mono text-xs text-mist/60 uppercase tracking-widest">
+            [cite_start]<span>Exp: 6 Years [cite: 3]</span>
+            [cite_start]<span>Based: Remote/Syria [cite: 2]</span>
+            <span>Status: Available Q1</span>
+        </div>
+        <a href="mailto:ghaidakalosh008@gmail.com" class="group relative px-6 py-2 overflow-hidden rounded-full border border-white/10 bg-white/5">
+            <div class="absolute inset-0 w-full h-full bg-royal/80 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            <span class="relative font-mono text-xs text-white group-hover:font-bold transition-all">INITIATE PROJECT</span>
+        </a>
+    </nav>
 
-        <section>
-            <h2>WHY YOU ARE LOSING MONEY</h2>
-            <div class="grid-comparison">
-                <div class="col-them">
-                    <span class="label">THE COMMODITY DESIGNER</span>
-                    <div class="comp-item">
-                        <div class="value strike">Subjective Art</div>
-                        <p>Focuses on "Vibes" and aesthetics.</p>
-                    </div>
-                    <div class="comp-item">
-                        <div class="value strike">Endless Revisions</div>
-                        <p>Guesses until you are happy.</p>
-                    </div>
-                    <div class="comp-item">
-                        <div class="value strike">Dribbble Ready</div>
-                        <p>Look good static, fails in production.</p>
-                    </div>
+    <main class="relative z-10 pt-32 px-6 md:px-12 max-w-[1600px] mx-auto">
+
+        <section class="min-h-[85vh] flex flex-col justify-center relative">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-royal blur-[120px] opacity-20 rounded-full pointer-events-none animate-pulse"></div>
+
+            <div class="relative z-10">
+                <div class="overflow-hidden mb-4">
+                    [cite_start]<p class="font-mono text-mist text-sm tracking-widest uppercase reveal-load">Senior Brand & Marketing Designer [cite: 2]</p>
                 </div>
+                
+                <h1 class="hero-title font-display font-medium text-white mb-10">
+                    <div class="overflow-hidden"><span class="block reveal-load">SYSTEMS</span></div>
+                    <div class="overflow-hidden"><span class="block reveal-load text-white/30">NOT JUST</span></div>
+                    <div class="overflow-hidden"><span class="block reveal-load">DECORATION.</span></div>
+                </h1>
 
-                <div class="col-me">
-                    <span class="label" style="color: var(--signal);">THE REVENUE ARCHITECT</span>
-                    <div class="comp-item">
-                        <div class="value">Conversion Psychology</div>
-                        <p>Focuses on reducing Cognitive Load.</p>
+                <div class="grid md:grid-cols-12 gap-8 items-end reveal-load" style="transition-delay: 0.4s;">
+                    <div class="md:col-span-5">
+                        <p class="text-xl text-mist/80 leading-relaxed">
+                            I architect scalable brand systems for Fintech & SaaS. 
+                            My work bridges the gap between <span class="text-white border-b border-royal">Silicon Valley aesthetics</span> and <span class="text-white border-b border-royal">MENA market nuances</span>.
+                        </p>
                     </div>
-                    <div class="comp-item">
-                        <div class="value">Modular Tokenization</div>
-                        <p>Scalable systems that engineering loves.</p>
-                    </div>
-                    <div class="comp-item">
-                        <div class="value">Sub-200ms Load</div>
-                        <p>Performance is a design feature.</p>
+                    <div class="md:col-span-7 flex justify-end gap-12 text-center">
+                        <div>
+                            <div class="font-display text-4xl text-white">70+</div>
+                            [cite_start]<div class="font-mono text-[10px] text-mist uppercase mt-2">Clients Served [cite: 5]</div>
+                        </div>
+                        <div>
+                            <div class="font-display text-4xl text-white">80%</div>
+                            [cite_start]<div class="font-mono text-[10px] text-mist uppercase mt-2">Retention Rate [cite: 6]</div>
+                        </div>
+                        <div>
+                            <div class="font-display text-4xl text-white">2.5x</div>
+                            [cite_start]<div class="font-mono text-[10px] text-mist uppercase mt-2">ROAS Growth [cite: 18]</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <div class="tabs">
-                <input type="radio" id="tab1" name="project-tabs" checked>
-                <input type="radio" id="tab2" name="project-tabs">
+        <section class="py-32 border-t border-white/5">
+            <div class="flex justify-between items-end mb-20">
+                <h2 class="font-display text-4xl text-white">SELECTED CASE STUDIES</h2>
+                <div class="font-mono text-xs text-mist">(2023 — 2026)</div>
+            </div>
 
-                <div class="tab-labels">
-                    <label for="tab1" class="tab-label">01. SYSTEM ARCHITECTURE</label>
-                    <label for="tab2" class="tab-label">02. GROWTH ACCELERATION</label>
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <div class="glass-card rounded-2xl p-8 md:p-12 relative group overflow-hidden h-[600px] flex flex-col justify-end">
+                    <div class="absolute inset-0 opacity-40 group-hover:opacity-20 transition-opacity duration-700 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+                    <div class="absolute top-10 right-10 w-32 h-32 rounded-full border border-royal/30 group-hover:scale-150 transition-transform duration-1000"></div>
+
+                    <div class="relative z-10">
+                        <div class="font-mono text-royal text-xs mb-4 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-royal rounded-full"></span> NETHERLANDS
+                        </div>
+                        <h3 class="font-display text-4xl text-white mb-4">SyrproNet Identity</h3>
+                        <p class="text-mist/70 text-lg mb-6 max-w-md">
+                            Architected the visual system for a network of 2,000+ experts. [cite_start]Established strict grid structures for "SyrproBridges" editorial. [cite: 23, 24, 25]
+                        </p>
+                        <div class="flex flex-wrap gap-3 font-mono text-xs text-white/40 uppercase">
+                            <span class="border border-white/10 px-3 py-1 rounded-full">Editorial Grid</span>
+                            <span class="border border-white/10 px-3 py-1 rounded-full">Brand Stewardship</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="tab-content content-sys">
-                    <div class="project-stat">> CLIENT: SYRPRONET (NETHERLANDS)</div>
-                    <div class="project-stat">> SCALE: 2,000+ EXPERTS</div>
+                <div class="glass-card rounded-2xl p-8 md:p-12 relative group overflow-hidden h-[600px] flex flex-col justify-end">
+                    <div class="absolute inset-0 bg-gradient-to-br from-royal/20 to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-700"></div>
                     
-                    <h3 style="font-size: 3rem; margin: 1rem 0;">EDITORIAL GRID SYSTEM</h3>
-                    <p class="project-desc">
-                        Architected the "SyrproBridges" visual identity. Established strict grid structures and typography standards to maintain rigorous consistency across 50+ pages of editorial content.
-                    </p>
-                    <div style="margin-top: 2rem; border: 1px solid #333; padding: 2rem;">
-                        <div style="font-family: monospace; color: var(--concrete);">
-                            [VISUAL: OVERLAY GRID SYSTEM ON MAGAZINE LAYOUT]<br>
-                            // Typography: Inter / Clash Display<br>
-                            // Grid: 12-Column Fluid<br>
-                            // Status: SHIPPED
+                    <div class="relative z-10">
+                        <div class="font-mono text-royal text-xs mb-4 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-royal rounded-full"></span> LONDON, UK
+                        </div>
+                        <h3 class="font-display text-4xl text-white mb-4">EduBridge Campaign</h3>
+                        <p class="text-mist/70 text-lg mb-6 max-w-md">
+                            Designed high-performance marketing assets reaching 25,000+ students. [cite_start]Achieved a 35% increase in applications. [cite: 31, 32]
+                        </p>
+                        <div class="flex flex-wrap gap-3 font-mono text-xs text-white/40 uppercase">
+                            <span class="border border-white/10 px-3 py-1 rounded-full">Performance Marketing</span>
+                            <span class="border border-white/10 px-3 py-1 rounded-full">+35% Conversion</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="tab-content content-growth">
-                    <div class="project-stat">> CLIENT: EDUBRIDGE (UK)</div>
-                    <div class="project-stat">> IMPACT: +35% APPLICATIONS</div>
+            </div>
+        </section>
 
-                    <h3 style="font-size: 3rem; margin: 1rem 0;">CONVERSION CAMPAIGN</h3>
-                    <p class="project-desc">
-                        Designed awareness campaigns supporting the organization's mission. Assets reached 25,000+ students, directly contributing to a 35% increase in program applications through emotionally resonant visuals.
+        <section class="py-32 border-t border-white/5">
+            <div class="grid md:grid-cols-12 gap-16">
+                <div class="md:col-span-4">
+                    <h2 class="font-display text-4xl text-white mb-6">NEURO-DESIGN METHODOLOGY</h2>
+                    <p class="text-mist/60 leading-relaxed">
+                        Top agencies don't guess. They follow a protocol. My workflow integrates <span class="text-white">Cognitive Science</span> with <span class="text-white">AI Automation</span> to deliver speed and precision.
                     </p>
-                    <div style="margin-top: 2rem; border: 1px solid #333; padding: 2rem;">
-                         <div style="font-family: monospace; color: var(--concrete);">
-                            [VISUAL: SPLIT SCREEN]<br>
-                            LEFT: Generic Stock Photo (Before)<br>
-                            RIGHT: Psychologically Framed Campaign (After)<br>
-                            RESULT: +40% Social Engagement
-                        </div>
+                </div>
+                <div class="md:col-span-8 grid gap-8">
+                    <div class="border-l border-white/10 pl-8 hover:border-royal transition-colors duration-500 group">
+                        <h3 class="font-display text-2xl text-white mb-2 group-hover:translate-x-2 transition-transform">01. DECONSTRUCT</h3>
+                        <p class="text-sm text-mist/60">Analyzing market gaps using data, not just aesthetics. (e.g., Clientero Churn Reduction) [cite_start][cite: 18]</p>
+                    </div>
+                    <div class="border-l border-white/10 pl-8 hover:border-royal transition-colors duration-500 group">
+                        <h3 class="font-display text-2xl text-white mb-2 group-hover:translate-x-2 transition-transform">02. TOKENIZE</h3>
+                        <p class="text-sm text-mist/60">Building atomic design systems in Figma that scale globally. (e.g., SyrproNet Guidelines) [cite_start][cite: 25]</p>
+                    </div>
+                    <div class="border-l border-white/10 pl-8 hover:border-royal transition-colors duration-500 group">
+                        <h3 class="font-display text-2xl text-white mb-2 group-hover:translate-x-2 transition-transform">03. DOMINATE</h3>
+                        [cite_start]<p class="text-sm text-mist/60">Deploying high-frequency assets via AI tools (Veo, Midjourney) for maximum ROAS. [cite: 12]</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <h2>INVESTMENT MODELS</h2>
-            <div class="pricing-grid" style="margin-top: 3rem;">
-                <div class="price-card">
-                    <span class="label">THE "BAND-AID"</span>
-                    <div class="price-num">$150<span style="font-size: 1rem; color: #666;">/hr</span></div>
-                    <p style="color: #999; margin-bottom: 2rem;">Hourly consulting to fix existing design errors.</p>
-                    <ul style="list-style: none; color: #666; font-size: 0.9rem;">
-                        <li>- Reactive fixes</li>
-                        <li>- No system ownership</li>
-                        <li>- Weekly invoicing</li>
-                    </ul>
+        <footer class="py-32 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-royal opacity-10"></div>
+            
+            <h2 class="relative z-10 font-display text-[10vw] leading-none text-white mix-blend-overlay hover:mix-blend-normal transition-all duration-500 cursor-pointer">
+                <a href="mailto:ghaidakalosh008@gmail.com">START NOW</a>
+            </h2>
+            
+            <div class="relative z-10 mt-12 flex flex-col items-center gap-4">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-royal/10 border border-royal/30 rounded-full">
+                    <span class="w-2 h-2 bg-[#00FF41] rounded-full animate-pulse"></span>
+                    <span class="font-mono text-xs text-royal uppercase tracking-widest">1 Slot Open for Q1 2026</span>
                 </div>
-                <div class="price-card premium">
-                    <span class="label" style="color: var(--signal);">THE SYSTEM (RECOMMENDED)</span>
-                    <div class="price-num">$5,000<span style="font-size: 1rem; color: #666;">+</span></div>
-                    <p style="color: white; margin-bottom: 2rem;">End-to-end Brand & Revenue Architecture.</p>
-                    <ul style="list-style: none; color: #ddd; font-size: 0.9rem;">
-                        <li>+ Full System Architecture</li>
-                        <li>+ Conversion Strategy</li>
-                        <li>+ Asset Tokenization</li>
-                        <li>+ Flat Fee / Net-30</li>
-                    </ul>
-                    <a href="mailto:ghaidakalosh008@gmail.com" class="cta-btn">INITIALIZE PROJECT</a>
+                <div class="font-mono text-[10px] text-white/20 uppercase mt-8">
+                    © 2026 Ghaidak Alosh. Damascus Node.
                 </div>
             </div>
-        </section>
+        </footer>
 
     </main>
 
-    <footer>
-        <div class="container">
-            <p><span class="status-dot"></span> SYSTEM STATUS: AVAILABLE FOR Q1 2026. CURRENT CAPACITY: 1 SLOT REMAINING.</p>
-            <p style="margin-top: 1rem; opacity: 0.5;">© 2026 Ghaidak Alosh. Damascus Node.</p>
-        </div>
-    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
 
+        // 1. Reveal on Load
+        const tl = gsap.timeline();
+        tl.to(".reveal-load", {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: "power4.out",
+            delay: 0.2
+        });
+
+        // 2. Custom Cursor Logic
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(dot, { x: e.clientX - 4, y: e.clientY - 4, duration: 0.1 });
+            gsap.to(outline, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.5, ease: "power2.out" });
+        });
+
+        // Hover expand effect
+        document.querySelectorAll('a, button, .glass-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(outline, { scale: 2, backgroundColor: 'rgba(191, 163, 255, 0.1)', border: 'none' });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(outline, { scale: 1, backgroundColor: 'transparent', border: '1px solid rgba(191, 163, 255, 0.5)' });
+            });
+        });
+
+        // 3. Parallax & Blur on Scroll
+        gsap.utils.toArray('.glass-card').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                },
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+    </script>
 </body>
 </html>
