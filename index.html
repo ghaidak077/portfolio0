@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#050505] antialiased">
+<html lang="en" class="bg-[#020202] antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghaidak Alosh | Principal Design Systems</title>
-    <meta name="description" content="Senior Visual Designer specializing in high-velocity branding and motion systems for agencies.">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=general-sans@300,400,500,600&display=swap" rel="stylesheet">
@@ -20,16 +19,13 @@
                     },
                     colors: {
                         brand: {
-                            bg: '#050505',
-                            surface: '#0A0A0A',
-                            accent: '#7000FF', // Deep Electric Violet
-                            light: '#E1E1E1',
-                            dim: '#555555',
-                            border: '#1A1A1A'
+                            bg: '#020202',      // Deepest Charcoal (Not pure black)
+                            surface: '#0A0A0A', // Slightly lighter for cards
+                            accent: '#8B5CF6',  // Vivid Violet
+                            light: '#EDEDED',
+                            dim: '#888888',     // Lighter gray for better legibility
+                            border: '#222222'
                         }
-                    },
-                    backgroundImage: {
-                        'grid-subtle': "linear-gradient(to right, #1A1A1A 1px, transparent 1px), linear-gradient(to bottom, #1A1A1A 1px, transparent 1px)",
                     }
                 }
             }
@@ -37,213 +33,202 @@
     </script>
 
     <style>
-        /* LUXURY RESET */
-        body { margin: 0; color: #E1E1E1; overflow-x: hidden; cursor: none; }
-        
-        ::selection { background: #7000FF; color: #fff; }
+        /* CORE */
+        body { margin: 0; color: #EDEDED; overflow-x: hidden; cursor: none; }
+        ::selection { background: #8B5CF6; color: #fff; }
 
-        /* SMOOTH SCROLL */
-        html.lenis { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto !important; }
-
-        /* MOUSE SPOTLIGHT MASK */
-        .spotlight-mask {
-            position: fixed; inset: 0; pointer-events: none; z-index: 1;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), transparent 0%, rgba(5,5,5,0.95) 500px);
+        /* 1. THE FLASHLIGHT GRID (The Fix) */
+        /* The grid exists everywhere, but is hidden by a mask */
+        .grid-reveal {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image: 
+                linear-gradient(to right, #333 1px, transparent 1px),
+                linear-gradient(to bottom, #333 1px, transparent 1px);
+            background-size: 60px 60px;
+            /* This is the magic: The grid is ONLY visible under the mouse */
+            -webkit-mask-image: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black, transparent);
+            mask-image: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black, transparent);
         }
 
-        /* GRID BACKGROUND */
-        .bg-grid {
-            position: fixed; inset: 0; z-index: 0;
-            background-size: 50px 50px;
-            background-image: linear-gradient(to right, #1A1A1A 1px, transparent 1px), linear-gradient(to bottom, #1A1A1A 1px, transparent 1px);
-            opacity: 0.3;
+        /* 2. AMBIENT NOISE (Texture) */
+        .noise {
+            position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0.04;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* CUSTOM CURSOR */
-        .cursor-outer {
-            width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.2);
+        /* 3. CURSOR */
+        .cursor-ring {
+            width: 20px; height: 20px; border: 1px solid rgba(255,255,255,0.8);
             position: fixed; top: 0; left: 0; border-radius: 50%;
-            pointer-events: none; z-index: 9999; transition: transform 0.15s ease-out;
-            mix-blend-mode: exclusion;
+            pointer-events: none; z-index: 9999; 
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
         }
-        .cursor-inner {
-            width: 6px; height: 6px; background: #fff;
-            position: fixed; top: 0; left: 0; border-radius: 50%;
-            pointer-events: none; z-index: 9999;
-        }
+        .cursor-ring.hovered { width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-color: transparent; }
 
-        /* UTILS */
-        .gpu { transform: translateZ(0); will-change: transform; }
-        .magnetic-btn { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
-        
-        /* IMAGE HOVER REVEAL */
-        .project-image { 
-            clip-path: inset(0 0 0 0); 
-            transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1), transform 0.8s ease-out;
+        /* 4. UTILS */
+        .magnetic { transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 1px #444; /* High visibility stroke */
         }
-        .group:hover .project-image { transform: scale(1.02); }
     </style>
 </head>
 <body class="bg-brand-bg">
 
-    <div class="bg-grid"></div>
-    <div class="spotlight-mask"></div>
-    <div class="cursor-outer hidden md:block"></div>
-    <div class="cursor-inner hidden md:block"></div>
+    <div class="noise"></div>
+    <div class="grid-reveal" id="grid-layer"></div>
+    <div class="cursor-ring hidden md:block"></div>
 
-    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-exclusion">
-        <a href="#" class="font-display font-semibold text-lg tracking-tight uppercase magnetic-area">
+    <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+        <a href="#" class="magnetic-area font-display font-bold text-xl tracking-tight uppercase hover:text-brand-accent transition-colors">
             Ghaidak.
         </a>
-        
-        <div class="flex items-center gap-12">
-            <div class="hidden md:flex gap-2 items-center text-[10px] font-mono tracking-widest text-brand-dim uppercase">
-                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                Available for Q1 2026
+        <div class="flex items-center gap-8">
+            <div class="hidden md:flex gap-2 items-center text-[11px] font-mono tracking-widest text-brand-dim uppercase">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Status: Available Q1
             </div>
-            
-            <a href="mailto:ghaidakalosh008@gmail.com" class="magnetic-area group relative px-6 py-2 overflow-hidden rounded-full border border-white/10 hover:border-white/40 transition-colors">
-                <span class="relative z-10 font-mono text-xs uppercase tracking-wide group-hover:text-black transition-colors duration-300">Start Project</span>
-                <div class="absolute inset-0 bg-white transform scale-y-0 group-hover:scale-y-100 transition-transform origin-bottom duration-300 ease-out"></div>
+            <a href="mailto:ghaidakalosh008@gmail.com" class="magnetic-area group px-6 py-2 border border-white/20 rounded-full hover:bg-brand-light hover:text-black transition-all duration-300">
+                <span class="font-mono text-xs uppercase tracking-wider font-medium">Start Project</span>
             </a>
         </div>
     </nav>
 
     <main class="relative z-10">
         
-        <section class="min-h-screen flex flex-col justify-end pb-24 px-6 md:px-12 relative">
-            <div class="max-w-[90vw]">
-                <div class="overflow-hidden mb-2">
-                    <h1 class="hero-text font-display font-semibold text-[13vw] leading-[0.8] tracking-tighter text-brand-light mix-blend-luminosity">
-                        VISUAL
-                    </h1>
-                </div>
-                <div class="overflow-hidden mb-2">
-                    <h1 class="hero-text font-display font-semibold text-[13vw] leading-[0.8] tracking-tighter text-brand-dim ml-[5vw] md:ml-[10vw]">
-                        SYSTEMS
-                    </h1>
-                </div>
-                <div class="overflow-hidden">
-                    <h1 class="hero-text font-display font-semibold text-[13vw] leading-[0.8] tracking-tighter text-brand-light">
-                        ENGINEER
-                    </h1>
-                </div>
-            </div>
+        <section class="min-h-screen flex flex-col justify-center px-4 md:px-12 pt-20">
+            <div class="max-w-[95vw] mx-auto">
+                <h1 class="font-display font-semibold text-[13vw] leading-[0.8] tracking-tighter mix-blend-lighten">
+                    <div class="overflow-hidden"><span class="reveal-text block text-brand-light">VISUAL</span></div>
+                    
+                    <div class="overflow-hidden">
+                        <span class="reveal-text block outline-text hover:text-[#333] transition-colors duration-500">SYSTEMS</span>
+                    </div>
+                    
+                    <div class="overflow-hidden"><span class="reveal-text block text-brand-light">ENGINEER</span></div>
+                </h1>
 
-            <div class="absolute top-1/2 right-12 md:right-24 -translate-y-1/2 hidden md:block w-64 text-right">
-                <p class="font-sans text-sm text-brand-dim leading-relaxed mb-8">
-                    Bridging the gap between <span class="text-white">Brand Strategy</span> and <span class="text-white">Motion</span> for high-velocity agencies.
-                </p>
-                <div class="font-mono text-[10px] text-brand-accent uppercase tracking-widest">
-                    Based in Damascus / Serving Global
+                <div class="mt-12 md:ml-[50vw] max-w-md">
+                    <p class="font-sans text-brand-dim text-sm md:text-base leading-relaxed">
+                        <strong class="text-white">Senior Visual Designer</strong> & Agency Partner.<br>
+                        Specializing in high-velocity branding, motion, and web systems for UAE & KSA markets.
+                    </p>
+                    <div class="mt-6 font-mono text-brand-accent text-xs tracking-widest uppercase">
+                        Damascus / Remote
+                    </div>
                 </div>
             </div>
         </section>
 
-        <div class="py-8 border-y border-brand-border bg-brand-surface/50 backdrop-blur-sm relative z-20 overflow-hidden">
+        <div class="py-6 border-y border-brand-border bg-brand-surface/30 backdrop-blur-sm overflow-hidden">
             <div class="marquee-wrapper flex whitespace-nowrap">
-                <div class="marquee-content flex gap-12 items-center text-sm font-mono text-brand-dim uppercase tracking-widest px-6 select-none">
+                <div class="marquee-content flex gap-16 text-xs font-mono text-brand-dim uppercase tracking-widest px-6 select-none">
                     <span>Trusted By:</span>
-                    <span class="text-white">Clientero</span>
-                    <span class="w-1 h-1 bg-brand-dim rounded-full"></span>
-                    <span class="text-white">SyrproNet</span>
-                    <span class="w-1 h-1 bg-brand-dim rounded-full"></span>
-                    <span class="text-white">Vera</span>
-                    <span class="w-1 h-1 bg-brand-dim rounded-full"></span>
-                    <span class="text-white">KSA Vision 2030 Partners</span>
-                </div>
-                <div class="marquee-content flex gap-12 items-center text-sm font-mono text-brand-dim uppercase tracking-widest px-6 select-none pl-12">
-                     <span>Trusted By:</span>
-                    <span class="text-white">Clientero</span>
-                    <span class="w-1 h-1 bg-brand-dim rounded-full"></span>
-                    <span class="text-white">SyrproNet</span>
-                    <span class="w-1 h-1 bg-brand-dim rounded-full"></span>
-                    <span class="text-white">Vera</span>
-                    <span class="w-1 h-1 bg-brand-dim rounded-full"></span>
-                    <span class="text-white">KSA Vision 2030 Partners</span>
+                    <strong class="text-white">Clientero</strong>
+                    <span>//</span>
+                    <strong class="text-white">SyrproNet</strong>
+                    <span>//</span>
+                    <strong class="text-white">Vera</strong>
+                    <span>//</span>
+                    <strong class="text-white">KSA Vision 2030</strong>
+                    <span>//</span>
+                    <strong class="text-white">Clientero</strong>
+                    <span>//</span>
+                    <strong class="text-white">SyrproNet</strong>
+                    <span>//</span>
+                    <strong class="text-white">Vera</strong>
                 </div>
             </div>
         </div>
 
-        <section class="py-32 px-6 md:px-12 bg-brand-bg">
-            <div class="flex justify-between items-end mb-24 border-b border-brand-border pb-6">
-                <h2 class="font-display text-4xl text-white">SELECTED INDEX</h2>
+        <section class="py-32 px-4 md:px-12">
+            <div class="flex justify-between items-end mb-20 border-b border-brand-border pb-4">
+                <h2 class="font-display text-4xl text-brand-light">SELECTED INDEX</h2>
                 <span class="font-mono text-xs text-brand-dim">(2024 — 2026)</span>
             </div>
 
-            <a href="#" class="group block mb-32 magnetic-area">
-                <div class="grid md:grid-cols-12 gap-8 items-start">
-                    <div class="md:col-span-8 relative overflow-hidden bg-brand-surface aspect-[16/9] border border-brand-border">
-                        <div class="project-image absolute inset-0 bg-neutral-900 flex items-center justify-center">
-                            <span class="font-display text-6xl text-white/5 group-hover:text-brand-accent/20 transition-colors duration-500">CLIENTERO</span>
-                        </div>
-                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="group relative mb-32 magnetic-area cursor-pointer">
+                <div class="grid md:grid-cols-12 gap-8">
+                    <div class="md:col-span-8 aspect-video bg-gradient-to-br from-[#111] to-[#050505] border border-brand-border rounded-sm relative overflow-hidden group-hover:border-brand-accent/50 transition-colors duration-500">
+                         <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="font-display font-bold text-6xl text-white/5 group-hover:text-brand-accent/10 transition-colors">CLIENTERO</span>
+                         </div>
                     </div>
-                    <div class="md:col-span-4 flex flex-col justify-between h-full pt-2">
+                    
+                    <div class="md:col-span-4 flex flex-col justify-between py-2">
                         <div>
-                            <h3 class="font-display text-3xl text-white mb-2 group-hover:text-brand-accent transition-colors">Clientero KSA</h3>
-                            <p class="font-sans text-brand-dim text-sm leading-relaxed mb-6">
-                                A comprehensive SaaS rebranding and motion system for the Saudi e-invoicing giant.
+                            <h3 class="font-display text-3xl text-brand-light mb-2 group-hover:text-brand-accent transition-colors">Clientero KSA</h3>
+                            <p class="text-brand-dim text-sm leading-relaxed">
+                                Complete SaaS rebranding and motion system for the Saudi e-invoicing giant.
                             </p>
                         </div>
-                        <ul class="font-mono text-[10px] text-brand-dim uppercase space-y-2 border-t border-brand-border pt-4">
-                            <li class="flex justify-between"><span>Role</span> <span class="text-white">Lead Design</span></li>
-                            <li class="flex justify-between"><span>Output</span> <span class="text-white">Brand + Motion</span></li>
-                            <li class="flex justify-between"><span>Impact</span> <span class="text-brand-accent">2x Ad CTR</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="group block mb-32 magnetic-area">
-                <div class="grid md:grid-cols-12 gap-8 items-start">
-                    <div class="md:col-span-8 relative overflow-hidden bg-brand-surface aspect-[16/9] border border-brand-border">
-                        <div class="project-image absolute inset-0 bg-neutral-900 flex items-center justify-center">
-                            <span class="font-display text-6xl text-white/5 group-hover:text-brand-accent/20 transition-colors duration-500">SYRPRONET</span>
+                        <div class="space-y-3 pt-6 border-t border-brand-border mt-6">
+                            <div class="flex justify-between text-[10px] font-mono uppercase tracking-wider text-brand-dim">
+                                <span>Role</span> <span class="text-white">Lead Design</span>
+                            </div>
+                            <div class="flex justify-between text-[10px] font-mono uppercase tracking-wider text-brand-dim">
+                                <span>Output</span> <span class="text-white">Brand + Motion</span>
+                            </div>
+                            <div class="flex justify-between text-[10px] font-mono uppercase tracking-wider text-brand-accent">
+                                <span>Impact</span> <span>2x CTR</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="md:col-span-4 flex flex-col justify-between h-full pt-2">
-                        <div>
-                            <h3 class="font-display text-3xl text-white mb-2 group-hover:text-brand-accent transition-colors">SyrproNet</h3>
-                            <p class="font-sans text-brand-dim text-sm leading-relaxed mb-6">
-                                Enterprise brand unification strategy and digital presence overhaul.
-                            </p>
-                        </div>
-                        <ul class="font-mono text-[10px] text-brand-dim uppercase space-y-2 border-t border-brand-border pt-4">
-                            <li class="flex justify-between"><span>Role</span> <span class="text-white">Art Direction</span></li>
-                            <li class="flex justify-between"><span>Output</span> <span class="text-white">Identity System</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </a>
-
-        </section>
-
-        <footer class="min-h-[80vh] flex flex-col justify-between px-6 md:px-12 py-12 bg-brand-surface relative overflow-hidden">
-            <div class="absolute inset-0 bg-grid-subtle opacity-10"></div>
-            
-            <div class="relative z-10 pt-24">
-                <h2 class="font-display font-semibold text-[8vw] leading-none text-white mb-8">
-                    LET'S SCALE <br> <span class="text-brand-dim italic">TOGETHER.</span>
-                </h2>
-                <div class="flex flex-col md:flex-row gap-12 mt-12">
-                     <a href="mailto:ghaidakalosh008@gmail.com" class="magnetic-area inline-flex items-center justify-center px-10 py-5 bg-brand-accent text-white font-bold rounded-sm transition-transform hover:scale-105 active:scale-95">
-                        <span class="font-mono tracking-widest uppercase text-xs">Book Discovery Call</span>
-                    </a>
-                    <a href="https://www.behance.net/ghaidakalo5fb4" target="_blank" class="magnetic-area inline-flex items-center justify-center px-10 py-5 border border-brand-border text-white font-bold rounded-sm hover:bg-white hover:text-black transition-all">
-                        <span class="font-mono tracking-widest uppercase text-xs">View Behance</span>
-                    </a>
                 </div>
             </div>
 
-            <div class="relative z-10 flex flex-col md:flex-row justify-between items-end border-t border-brand-border pt-8 mt-24">
-                <div class="font-mono text-[10px] text-brand-dim uppercase tracking-widest mb-4 md:mb-0">
-                    © 2026 Ghaidak Alosh. <br> All Rights Reserved.
+            <div class="group relative mb-32 magnetic-area cursor-pointer">
+                <div class="grid md:grid-cols-12 gap-8">
+                    <div class="md:col-span-8 aspect-video bg-gradient-to-br from-[#111] to-[#050505] border border-brand-border rounded-sm relative overflow-hidden group-hover:border-brand-accent/50 transition-colors duration-500">
+                         <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="font-display font-bold text-6xl text-white/5 group-hover:text-brand-accent/10 transition-colors">SYRPRO</span>
+                         </div>
+                    </div>
+                    
+                    <div class="md:col-span-4 flex flex-col justify-between py-2">
+                        <div>
+                            <h3 class="font-display text-3xl text-brand-light mb-2 group-hover:text-brand-accent transition-colors">SyrproNet</h3>
+                            <p class="text-brand-dim text-sm leading-relaxed">
+                                Enterprise brand unification strategy and digital presence overhaul.
+                            </p>
+                        </div>
+                        <div class="space-y-3 pt-6 border-t border-brand-border mt-6">
+                            <div class="flex justify-between text-[10px] font-mono uppercase tracking-wider text-brand-dim">
+                                <span>Role</span> <span class="text-white">Art Direction</span>
+                            </div>
+                            <div class="flex justify-between text-[10px] font-mono uppercase tracking-wider text-brand-dim">
+                                <span>Output</span> <span class="text-white">Identity System</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-right">
-                     <p class="font-display text-xl text-white mb-1">Damascus, SY</p>
-                     <p id="time-display" class="font-mono text-xs text-brand-accent">00:00 GMT+3</p>
+            </div>
+        </section>
+
+        <footer class="pt-24 pb-12 px-6 bg-[#050505] border-t border-brand-border">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="font-display font-bold text-[8vw] leading-[0.9] text-brand-light mb-12">
+                    LET'S SCALE <br> 
+                    <span class="text-[#444] italic group-hover:text-white transition-colors duration-500">TOGETHER.</span>
+                </h2>
+                
+                <div class="flex gap-6 mb-24">
+                    <a href="mailto:ghaidakalosh008@gmail.com" class="magnetic-area inline-block px-8 py-4 bg-brand-accent text-white font-bold tracking-wide text-sm hover:bg-white hover:text-black transition-colors">
+                        BOOK DISCOVERY CALL
+                    </a>
+                    <a href="#" class="magnetic-area inline-block px-8 py-4 border border-brand-border text-white font-bold tracking-wide text-sm hover:border-white transition-colors">
+                        VIEW BEHANCE
+                    </a>
+                </div>
+
+                <div class="flex justify-between items-end border-t border-brand-border pt-8 text-[10px] font-mono text-brand-dim uppercase tracking-widest">
+                    <div>© 2026 Ghaidak Alosh.</div>
+                    <div class="text-right">
+                        <div class="text-white mb-1">Damascus, SY</div>
+                        <div id="time-display" class="text-brand-accent">00:00 GMT+3</div>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -255,60 +240,60 @@
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
     <script>
-        // INIT LENIS
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
+        // 1. REVEAL ENGINE (Grid Flashlight)
+        const gridLayer = document.getElementById('grid-layer');
+        const cursorRing = document.querySelector('.cursor-ring');
+        
+        window.addEventListener('mousemove', (e) => {
+            // Move the grid mask
+            gridLayer.style.setProperty('--mouse-x', e.clientX + 'px');
+            gridLayer.style.setProperty('--mouse-y', e.clientY + 'px');
 
-        // GSAP INIT
-        gsap.registerPlugin(ScrollTrigger);
-
-        // 1. HERO REVEAL
-        const tl = gsap.timeline();
-        tl.from(".hero-text", { y: 150, skewY: 7, duration: 1.5, stagger: 0.1, ease: "power4.out" });
-
-        // 2. CURSOR & SPOTLIGHT
-        const cursorOuter = document.querySelector(".cursor-outer");
-        const cursorInner = document.querySelector(".cursor-inner");
-        const spotlight = document.querySelector(".spotlight-mask");
-
-        let mouseX = 0;
-        let mouseY = 0;
-
-        window.addEventListener("mousemove", (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            gsap.to(cursorOuter, { x: mouseX - 20, y: mouseY - 20, duration: 0.15 });
-            gsap.to(cursorInner, { x: mouseX - 3, y: mouseY - 3, duration: 0.05 });
-            
-            spotlight.style.setProperty('--x', mouseX + 'px');
-            spotlight.style.setProperty('--y', mouseY + 'px');
+            // Move the custom cursor
+            gsap.to(cursorRing, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1,
+                ease: "power2.out"
+            });
         });
 
-        // 3. MAGNETIC BUTTONS
+        // 2. MAGNETIC ELEMENTS
         document.querySelectorAll('.magnetic-area').forEach(btn => {
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+                
+                gsap.to(btn, { x: x * 0.2, y: y * 0.2, duration: 0.3 });
+                cursorRing.classList.add('hovered');
             });
+
             btn.addEventListener('mouseleave', () => {
                 gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+                cursorRing.classList.remove('hovered');
             });
         });
 
-        // 4. CLOCK
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { 
+        // 3. SMOOTH SCROLL
+        const lenis = new Lenis();
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // 4. ANIMATIONS
+        const tl = gsap.timeline();
+        tl.from(".reveal-text", { yPercent: 100, duration: 1, stagger: 0.1, ease: "power4.out", delay: 0.2 });
+
+        // Marquee Animation
+        gsap.to(".marquee-content", { xPercent: -50, ease: "none", duration: 20, repeat: -1 });
+
+        // Clock
+        setInterval(() => {
+            const time = new Date().toLocaleTimeString('en-US', { 
                 hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Damascus' 
             });
-            document.getElementById('time-display').textContent = timeString + " GMT+3";
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
+            document.getElementById('time-display').textContent = time + " GMT+3";
+        }, 1000);
     </script>
 </body>
 </html>
