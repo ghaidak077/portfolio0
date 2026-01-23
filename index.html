@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#050505] scroll-smooth antialiased selection:bg-emerald-400 selection:text-black">
+<html lang="en" class="bg-[#030303] scroll-smooth antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ghaidak Alosh - Visual Systems Architect for SaaS & Fintech.">
-    <title>GHAIDAK ALOSH | SAAS ARCHITECT</title>
+    <title>GHAIDAK ALOSH | VISUAL SYSTEMS</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -21,13 +21,13 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        brand: '#10B981', /* Saudi Emerald / Tech Green */
+                        brand: '#10B981', /* Saudi Emerald */
+                        accent: '#34D399',
                         void: '#030303',
                         surface: '#0A0A0A',
-                        glass: 'rgba(255, 255, 255, 0.03)'
                     },
-                    backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)"
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
                     }
                 }
             }
@@ -35,182 +35,214 @@
     </script>
 
     <style>
-        /* --- SAAS POLISH --- */
-        body { margin: 0; background: #030303; color: #E5E5E5; overflow-x: hidden; }
+        /* --- AGENCY POLISH --- */
+        body { margin: 0; overflow-x: hidden; cursor: none; } /* Custom Cursor Active */
         
-        /* The "Stripe" Grid Background */
-        .bg-grid { background-size: 40px 40px; mask-image: linear-gradient(to bottom, black 40%, transparent 100%); opacity: 0.4; pointer-events: none; position: fixed; inset: 0; z-index: 0; }
-        
-        /* Glassmorphism Cards */
-        .bento-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .bento-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(16, 185, 129, 0.4); /* Brand Green */
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        /* Noise Texture */
+        .noise-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 50;
         }
 
-        /* Typography Motion */
-        .word-reveal { overflow: hidden; display: inline-block; vertical-align: top; }
-        .word-reveal span { display: inline-block; transform: translateY(110%); will-change: transform; }
+        /* Custom Cursor */
+        .cursor-dot, .cursor-circle {
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; pointer-events: none; z-index: 9999;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot { width: 8px; height: 8px; background: white; }
+        .cursor-circle { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.5); transition: width 0.3s, height 0.3s, background 0.3s; }
+        
+        /* Hover States for Cursor */
+        body:has(a:hover) .cursor-circle, body:has(button:hover) .cursor-circle {
+            width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-color: transparent;
+        }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #030303; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #10B981; }
-
-        /* Utilities */
-        .text-glow { text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+        /* Typography Clamp */
+        .hero-title { font-size: clamp(3rem, 9vw, 8rem); line-height: 0.9; }
+        
+        /* Loader */
+        #loader {
+            position: fixed; inset: 0; background: #030303; z-index: 100;
+            display: flex; justify-content: center; items-center;
+            transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+        }
     </style>
 </head>
-<body class="selection:bg-brand selection:text-white">
+<body class="text-[#E5E5E5] selection:bg-brand selection:text-black">
 
-    <div class="bg-grid bg-grid-pattern"></div>
-
-    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center border-b border-white/5 bg-void/80 backdrop-blur-xl">
-        <div class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-brand rounded-full animate-pulse"></div>
-            <div class="font-mono text-xs text-white tracking-widest font-bold">GHAIDAK.SYSTEMS</div>
+    <div id="loader">
+        <div class="flex flex-col items-center gap-4">
+            <div class="font-mono text-xs text-brand animate-pulse">INITIALIZING SYSTEM</div>
+            <div class="w-32 h-[1px] bg-white/10 relative overflow-hidden">
+                <div class="absolute inset-0 bg-brand w-full -translate-x-full animate-[slide_1.5s_ease-in-out_forwards]"></div>
+            </div>
         </div>
-        
-        <div class="hidden md:flex items-center gap-8 font-mono text-[10px] text-white/50 uppercase tracking-widest">
-            <span>Damascus (GMT+3)</span>
-            <span class="text-brand">● Available Q1 2026</span>
-        </div>
+    </div>
 
-        <button onclick="copyEmail()" class="group relative px-5 py-2 bg-white/5 border border-white/10 hover:border-brand transition-all overflow-hidden rounded-sm">
-            <div class="absolute inset-0 bg-brand translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-            <span class="relative font-mono text-[10px] uppercase font-bold group-hover:text-black transition-colors flex items-center gap-2">
-                <span class="material-icons-round text-[12px]">content_copy</span>
-                Copy Email
-            </span>
-        </button>
+    <div class="noise-bg"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+
+    <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+        <div class="font-display font-bold text-xl tracking-tight">GHAIDAK<span class="text-brand">.</span></div>
+        <a href="mailto:ghaidakalosh008@gmail.com" class="font-mono text-xs border border-white/20 px-4 py-2 rounded-full hover:bg-white hover:text-black transition-colors duration-300">
+            AVAIL: Q1 2026
+        </a>
     </nav>
 
-    <main>
+    <main class="relative z-10">
         
-        <section class="min-h-[90vh] flex flex-col justify-center px-6 md:px-12 relative pt-20">
-            <div class="max-w-[1200px] mx-auto w-full">
-                
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-8 w-fit reveal-hero opacity-0">
-                    <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
-                    <span class="font-mono text-[10px] text-white/70 uppercase tracking-wide">Specialized for Series A+ Fintech</span>
+        <section class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20">
+            <div class="max-w-[1400px] mx-auto w-full">
+                <div class="overflow-hidden mb-4">
+                    <p class="reveal-text translate-y-[100%] font-mono text-brand text-xs md:text-sm tracking-widest uppercase">
+                        Senior Visual Systems Designer
+                    </p>
                 </div>
-
-                <h1 class="font-display font-medium text-[10vw] md:text-[7vw] leading-[0.9] tracking-[-0.02em] text-white mb-8">
-                    <div class="word-reveal"><span>SCALING</span></div>
-                    <div class="word-reveal"><span class="text-white/40">DIGITAL</span></div>
-                    <div class="word-reveal"><span>TRUST.</span></div>
+                
+                <h1 class="hero-title font-display font-medium text-white mb-8 tracking-tighter">
+                    <div class="overflow-hidden"><div class="reveal-text translate-y-[100%]">GLOBAL</div></div>
+                    <div class="overflow-hidden"><div class="reveal-text translate-y-[100%] text-white/40">BRAND</div></div>
+                    <div class="overflow-hidden"><div class="reveal-text translate-y-[100%]">ARCHITECTURE</div></div>
                 </h1>
 
-                <div class="grid md:grid-cols-12 gap-8 items-start reveal-hero opacity-0">
+                <div class="grid md:grid-cols-12 gap-8 items-start mt-12 opacity-0 reveal-fade">
                     <div class="md:col-span-5">
-                        <p class="text-lg text-[#888] leading-relaxed">
-                            I build enterprise-grade design systems for SaaS companies in KSA & MENA. 
-                            Bridging the gap between <span class="text-white">Silicon Valley aesthetics</span> and <span class="text-white">Regional market needs</span>.
+                        <p class="text-lg md:text-xl text-[#888] leading-relaxed max-w-lg">
+                            I build scalable design languages for Fintech & SaaS. 
+                            Bridging <strong>European precision</strong> with <strong>Middle Eastern market depth</strong>.
                         </p>
-                    </div>
-                    <div class="md:col-span-7 flex flex-wrap gap-4 font-mono text-xs text-brand">
-                        <span class="px-3 py-2 border border-white/10 rounded bg-white/5">● RTL NATIVE</span>
-                        <span class="px-3 py-2 border border-white/10 rounded bg-white/5">● DESIGN SYSTEMS</span>
-                        <span class="px-3 py-2 border border-white/10 rounded bg-white/5">● HIGH-CONVERSION UI</span>
+                        <div class="flex gap-4 mt-8">
+                            <span class="text-xs font-mono border border-white/10 px-3 py-1 rounded text-white/60">Dubai</span>
+                            <span class="text-xs font-mono border border-white/10 px-3 py-1 rounded text-white/60">Amsterdam</span>
+                            <span class="text-xs font-mono border border-white/10 px-3 py-1 rounded text-white/60">Riyadh</span>
+                        </div>
                     </div>
                 </div>
-
+            </div>
+            
+            <div class="absolute bottom-10 right-10 flex items-center gap-4 opacity-0 reveal-fade">
+                <span class="font-mono text-[10px] text-white/40 uppercase">Scroll to explore</span>
+                <div class="w-[1px] h-12 bg-white/20"></div>
             </div>
         </section>
 
-        <section class="py-24 px-4 md:px-12 border-t border-white/5">
+        <section class="py-32 px-4 md:px-12 border-t border-white/5 bg-surface/50 backdrop-blur-sm">
             <div class="max-w-[1400px] mx-auto">
-                <div class="flex justify-between items-end mb-16">
-                    <h2 class="font-display text-4xl text-white">SELECTED DATA</h2>
-                    <div class="font-mono text-xs text-white/40 hidden md:block">01 — 03</div>
+                <div class="flex justify-between items-end mb-20">
+                    <h2 class="font-display text-4xl md:text-6xl text-white">SELECTED WORKS</h2>
+                    <div class="font-mono text-xs text-brand">(2023 — 2026)</div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]">
+                <div class="project-card group relative w-full h-[60vh] bg-[#111] border border-white/5 rounded-lg overflow-hidden mb-8 cursor-pointer">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-60 group-hover:opacity-30 transition-opacity duration-700">
+                        <div class="w-[70%] h-[70%] border border-white/10 rounded-xl relative transform group-hover:scale-95 transition-transform duration-700">
+                            <div class="absolute top-4 left-4 right-4 h-8 border-b border-white/10 flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500/20"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/20"></div>
+                                <div class="w-3 h-3 rounded-full bg-brand/40"></div>
+                            </div>
+                            <div class="absolute top-20 left-4 w-32 h-32 border border-white/5 rounded bg-white/5"></div>
+                            <div class="absolute top-20 left-40 right-4 h-32 border border-white/5 rounded bg-gradient-to-r from-brand/10 to-transparent"></div>
+                        </div>
+                    </div>
                     
-                    <div class="md:col-span-2 bento-card rounded-xl p-8 flex flex-col justify-between group relative overflow-hidden cursor-pointer">
-                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-40 group-hover:scale-105 transition-transform duration-700"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                        
-                        <div class="relative z-10 flex justify-between items-start">
-                            <span class="px-3 py-1 bg-brand/20 text-brand border border-brand/30 rounded text-[10px] font-mono uppercase">Fintech</span>
-                            <span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-brand group-hover:border-brand group-hover:text-black transition-colors">↗</span>
-                        </div>
-                        
-                        <div class="relative z-10">
-                            <h3 class="font-display text-3xl text-white mb-2">CLIENTERO</h3>
-                            <p class="text-white/60 text-sm max-w-md">Complete dashboard overhaul for KSA's leading e-invoicing platform. Reduced churn by 18%.</p>
-                        </div>
-                    </div>
-
-                    <div class="bento-card rounded-xl p-8 flex flex-col justify-center items-center text-center group">
-                        <div class="w-16 h-16 mb-6 rounded-full bg-brand/10 flex items-center justify-center text-brand">
-                            <span class="material-icons-round text-3xl">trending_up</span>
-                        </div>
-                        <div class="font-display text-5xl text-white mb-2 group-hover:text-brand transition-colors">+200%</div>
-                        <div class="font-mono text-xs text-white/40 uppercase tracking-widest">User Retention</div>
-                        <p class="mt-4 text-xs text-white/40 px-4">Result achieved via cognitive load reduction in UI.</p>
-                    </div>
-
-                    <div class="bento-card rounded-xl p-8 flex flex-col justify-between group relative overflow-hidden md:col-span-1">
-                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:scale-105 transition-transform duration-700"></div>
-                        <div class="absolute inset-0 bg-black/60"></div>
-                        
-                        <div class="relative z-10">
-                             <span class="px-3 py-1 bg-white/10 text-white border border-white/10 rounded text-[10px] font-mono uppercase">Identity</span>
-                        </div>
-                        <div class="relative z-10">
-                            <h3 class="font-display text-2xl text-white mb-1">SYRPRO</h3>
-                            <p class="text-white/60 text-xs">Global rebranding & Design System.</p>
-                        </div>
-                    </div>
-
-                    <div class="md:col-span-2 bento-card rounded-xl p-8 flex items-center justify-between group bg-brand/5 border-brand/20">
-                        <div class="max-w-md">
-                            <h3 class="font-display text-2xl text-white mb-2">Need a Scalable Design System?</h3>
-                            <p class="text-white/50 text-sm">I specialize in creating tokenized, component-based design systems that your dev team will actually love.</p>
-                            <div class="flex gap-4 mt-6">
-                                <div class="flex items-center gap-2 text-xs text-white/60 font-mono">
-                                    <span class="text-brand">✓</span> Figma Variables
-                                </div>
-                                <div class="flex items-center gap-2 text-xs text-white/60 font-mono">
-                                    <span class="text-brand">✓</span> React Handoff
-                                </div>
-                                <div class="flex items-center gap-2 text-xs text-white/60 font-mono">
-                                    <span class="text-brand">✓</span> Dark Mode
-                                </div>
+                    <div class="absolute bottom-0 left-0 w-full p-8 md:p-12 bg-gradient-to-t from-black via-black/80 to-transparent translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <h3 class="font-display text-3xl md:text-4xl text-white mb-2 group-hover:text-brand transition-colors">CLIENTERO</h3>
+                                <p class="font-mono text-xs text-white/60 uppercase tracking-widest">SaaS Dashboard • KSA • 2026</p>
+                            </div>
+                            <div class="text-right hidden md:block">
+                                <div class="font-display text-2xl text-white">18%</div>
+                                <div class="font-mono text-[10px] text-white/40">CHURN REDUCTION</div>
                             </div>
                         </div>
-                        <div class="h-full flex items-center">
-                            <button onclick="copyEmail()" class="w-12 h-12 rounded-full bg-brand text-black flex items-center justify-center hover:scale-110 transition-transform">
-                                <span class="material-icons-round">arrow_forward</span>
-                            </button>
-                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="project-card group relative h-[50vh] bg-[#111] border border-white/5 rounded-lg overflow-hidden cursor-pointer">
+                         <div class="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] to-black">
+                             <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+                                 <span class="font-display text-[15vw] text-white/5 leading-none group-hover:scale-110 transition-transform duration-1000">SYR</span>
+                             </div>
+                         </div>
+                         <div class="absolute bottom-8 left-8">
+                            <h3 class="font-display text-2xl text-white mb-1 group-hover:text-brand transition-colors">SYRPRO NET</h3>
+                            <p class="font-mono text-xs text-white/60 uppercase">Editorial System • Netherlands</p>
+                         </div>
                     </div>
 
+                    <div class="project-card group relative h-[50vh] bg-[#111] border border-white/5 rounded-lg overflow-hidden cursor-pointer flex flex-col justify-center items-center text-center p-8">
+                        <div class="w-20 h-20 rounded-full border border-dashed border-white/20 flex items-center justify-center mb-6 group-hover:border-brand group-hover:rotate-90 transition-all duration-700">
+                            <span class="material-icons-round text-3xl text-white">play_arrow</span>
+                        </div>
+                        <h3 class="font-display text-2xl text-white mb-2">Campaign Growth</h3>
+                        <p class="text-white/50 text-sm max-w-xs">Produced 22+ video assets for Saudi Agencies using AI-assisted workflow (Veo + Premiere).</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-32 px-6 md:px-12">
+            <div class="max-w-[1000px] mx-auto">
+                <div class="grid md:grid-cols-2 gap-16">
+                    <div>
+                        <h2 class="font-display text-4xl text-white mb-6">THE SYSTEM</h2>
+                        <p class="text-white/60 leading-relaxed mb-8">
+                            I don't just "make logos." I build scalable visual operating systems. 
+                            From <span class="text-white">Figma Tokenization</span> to <span class="text-white">Print Production</span>, 
+                            I ensure your brand survives the chaos of scaling.
+                        </p>
+                        <ul class="space-y-4 font-mono text-sm text-white/80">
+                            <li class="flex items-center gap-3">
+                                <span class="w-1.5 h-1.5 bg-brand rounded-full"></span> Design Tokens & Variables
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-1.5 h-1.5 bg-brand rounded-full"></span> Multi-Language (RTL/LTR) Support
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-1.5 h-1.5 bg-brand rounded-full"></span> AI-Enhanced Workflows
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute top-0 right-0 w-64 h-80 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg transform rotate-6 z-10"></div>
+                        <div class="absolute top-4 right-4 w-64 h-80 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg transform rotate-3 z-20"></div>
+                        <div class="absolute top-8 right-8 w-64 h-80 bg-[#0A0A0A] border border-white/20 rounded-lg z-30 p-6 flex flex-col justify-between">
+                            <div class="flex gap-2">
+                                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="font-mono text-[10px] text-brand">
+                                > SYSTEM_READY<br>
+                                > IMPORTING_TOKENS...<br>
+                                > OPTIMIZING_ASSETS...<br>
+                                > DONE.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <footer class="py-20 border-t border-white/5 text-center">
-            <h2 class="font-display text-2xl text-white mb-8">READY TO SCALE?</h2>
-            <div class="inline-flex flex-col gap-4">
-                <button onclick="copyEmail()" class="font-mono text-xl text-brand hover:text-white transition-colors border-b border-brand/50 pb-1">
+        <footer class="py-24 px-6 border-t border-white/5 flex flex-col items-center justify-center text-center">
+            <h2 class="font-display text-[12vw] leading-none text-white/10 hover:text-white/90 transition-colors duration-700 cursor-pointer">
+                LET'S TALK
+            </h2>
+            <div class="mt-12 flex flex-col items-center gap-6">
+                <a href="mailto:ghaidakalosh008@gmail.com" class="text-2xl font-display text-white border-b border-brand pb-1 hover:text-brand transition-colors">
                     ghaidakalosh008@gmail.com
-                </button>
-                <div id="toast" class="text-[10px] font-mono text-emerald-500 opacity-0 transition-opacity duration-300">
-                    COPIED TO CLIPBOARD
+                </a>
+                <div class="flex gap-6 font-mono text-xs text-white/40 uppercase">
+                    <span>Remote / Async</span>
+                    <span>GMT+3</span>
                 </div>
-            </div>
-            <div class="mt-12 text-[10px] font-mono text-white/20 uppercase">
-                © 2026 Ghaidak Alosh. Damascus Node.
             </div>
         </footer>
 
@@ -220,45 +252,73 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        // --- 1. HERO ANIMATION ---
-        const tl = gsap.timeline();
-        tl.to(".word-reveal span", {
-            y: 0,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: "power4.out",
-            delay: 0.2
-        })
-        .to(".reveal-hero", {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power2.out"
-        }, "-=0.8");
-
-        // --- 2. BENTO CARDS REVEAL ---
-        gsap.from(".bento-card", {
-            scrollTrigger: {
-                trigger: ".grid",
-                start: "top 80%",
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power2.out"
+        // --- 1. LOADER ANIMATION ---
+        window.addEventListener("load", () => {
+            const tl = gsap.timeline();
+            
+            // Slide loader up
+            tl.to("#loader", {
+                yPercent: -100,
+                duration: 1.2,
+                ease: "power4.inOut",
+                delay: 0.5
+            })
+            // Reveal Hero Text
+            .to(".reveal-text", {
+                y: 0,
+                duration: 1.2,
+                stagger: 0.1,
+                ease: "power3.out"
+            }, "-=0.8")
+            // Fade in details
+            .to(".reveal-fade", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.2
+            }, "-=1");
         });
 
-        // --- 3. COPY FUNCTION ---
-        function copyEmail() {
-            navigator.clipboard.writeText('ghaidakalosh008@gmail.com');
-            const toast = document.getElementById('toast');
-            toast.style.opacity = '1';
-            setTimeout(() => toast.style.opacity = '0', 2000);
+        // --- 2. MOUSE FOLLOWER ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorCircle = document.querySelector('.cursor-circle');
+        
+        // Only on Desktop
+        if (window.matchMedia("(min-width: 768px)").matches) {
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(cursorDot, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.1,
+                    ease: "power2.out"
+                });
+                gsap.to(cursorCircle, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            });
         }
+
+        // --- 3. SCROLL TRIGGERS ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Parallax Effect for Project Cards
+        gsap.utils.toArray('.project-card').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom",
+                    end: "top center",
+                    scrub: 1
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1
+            });
+        });
+
     </script>
 </body>
 </html>
