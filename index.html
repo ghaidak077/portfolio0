@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#050505] scroll-smooth antialiased">
+<html lang="en" class="bg-[#050505] scroll-smooth antialiased selection:bg-emerald-400 selection:text-black">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ghaidak Alosh - Senior Visual Architect & Brand Designer based in Damascus.">
-    <title>GHAIDAK ALOSH | VISUAL ARCHITECT</title>
+    <meta name="description" content="Ghaidak Alosh - Visual Systems Architect for SaaS & Fintech.">
+    <title>GHAIDAK ALOSH | SAAS ARCHITECT</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -20,257 +21,243 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        neon: '#CCFF00',
-                        void: '#050505',
-                        surface: '#0A0A0A'
+                        brand: '#10B981', /* Saudi Emerald / Tech Green */
+                        void: '#030303',
+                        surface: '#0A0A0A',
+                        glass: 'rgba(255, 255, 255, 0.03)'
                     },
-                    cursor: { none: 'none' }
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)"
+                    }
                 }
             }
         }
     </script>
 
     <style>
-        /* --- CORE OPTIMIZATIONS --- */
-        body { margin: 0; background: #050505; color: #E5E5E5; overflow-x: hidden; }
-        ::selection { background: #CCFF00; color: #000; }
+        /* --- SAAS POLISH --- */
+        body { margin: 0; background: #030303; color: #E5E5E5; overflow-x: hidden; }
         
-        /* High-Perf Reveal Curtain */
-        .curtain {
-            position: fixed; inset: 0; background: #050505; z-index: 9999;
-            transform-origin: top; will-change: transform;
+        /* The "Stripe" Grid Background */
+        .bg-grid { background-size: 40px 40px; mask-image: linear-gradient(to bottom, black 40%, transparent 100%); opacity: 0.4; pointer-events: none; position: fixed; inset: 0; z-index: 0; }
+        
+        /* Glassmorphism Cards */
+        .bento-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bento-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(16, 185, 129, 0.4); /* Brand Green */
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
         }
 
-        /* Text Reveals */
-        .char-reveal { display: inline-block; clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
-        .char-reveal span { display: inline-block; transform: translateY(110%); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .is-visible .char-reveal span { transform: translateY(0); }
+        /* Typography Motion */
+        .word-reveal { overflow: hidden; display: inline-block; vertical-align: top; }
+        .word-reveal span { display: inline-block; transform: translateY(110%); will-change: transform; }
 
-        /* Images */
-        .img-wrapper { overflow: hidden; position: relative; }
-        .img-wrapper img { transform: scale(1.1); transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; }
-        .project-card:hover .img-wrapper img { transform: scale(1); }
-        .img-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); transition: opacity 0.5s; }
-        .project-card:hover .img-overlay { opacity: 0; }
-
-        /* Custom Cursor */
-        @media (hover: hover) and (pointer: fine) {
-            body { cursor: none; }
-            #cursor { display: block; pointer-events: none; mix-blend-mode: difference; z-index: 10000; position: fixed; top: 0; left: 0; }
-            .cursor-dot { width: 12px; height: 12px; background: #CCFF00; border-radius: 50%; transition: transform 0.3s, width 0.3s, height 0.3s; }
-            .cursor-label { opacity: 0; position: absolute; top: -20px; left: 20px; font-family: 'JetBrains Mono'; font-size: 10px; color: #CCFF00; white-space: nowrap; transition: opacity 0.2s; }
-            body.hover-active .cursor-dot { transform: scale(4); background: rgba(204, 255, 0, 0.2); border: 1px solid #CCFF00; }
-            body.hover-active .cursor-label { opacity: 1; }
-        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10B981; }
 
         /* Utilities */
-        .scanlines {
-            position: fixed; inset: 0; pointer-events: none; z-index: 50;
-            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.2) 3px);
-            opacity: 0.4; mix-blend-mode: overlay;
-        }
+        .text-glow { text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
     </style>
 </head>
-<body>
+<body class="selection:bg-brand selection:text-white">
 
-    <div class="curtain flex items-center justify-center">
-        <div class="font-mono text-xs text-neon tracking-widest animate-pulse">INITIALIZING SYSTEM...</div>
-    </div>
+    <div class="bg-grid bg-grid-pattern"></div>
 
-    <div class="scanlines"></div>
-    <div id="cursor" class="hidden">
-        <div class="cursor-dot"></div>
-        <div class="cursor-label">VIEW</div>
-    </div>
-
-    <div id="toast" class="fixed top-8 left-1/2 -translate-x-1/2 z-50 bg-neon text-black px-6 py-2 font-mono text-xs font-bold uppercase tracking-widest rounded-full opacity-0 transform -translate-y-full transition-all duration-300">
-        Email Copied to Clipboard
-    </div>
-
-    <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-start mix-blend-difference">
-        <div class="font-mono text-xs leading-tight">
-            <div class="font-bold text-white tracking-wider">GHAIDAK ALOSH</div>
-            <div class="text-white/60 text-[10px]">VISUAL ARCHITECT</div>
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center border-b border-white/5 bg-void/80 backdrop-blur-xl">
+        <div class="flex items-center gap-3">
+            <div class="w-2 h-2 bg-brand rounded-full animate-pulse"></div>
+            <div class="font-mono text-xs text-white tracking-widest font-bold">GHAIDAK.SYSTEMS</div>
         </div>
         
-        <button onclick="copyEmail()" class="group relative px-6 py-2 border border-white/20 bg-black/50 backdrop-blur-md overflow-hidden transition-colors hover:border-neon">
-            <div class="absolute inset-0 bg-neon translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-            <span class="relative font-mono text-[10px] uppercase tracking-widest font-bold group-hover:text-black flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-neon rounded-full group-hover:bg-black"></span>
-                Hire Me
+        <div class="hidden md:flex items-center gap-8 font-mono text-[10px] text-white/50 uppercase tracking-widest">
+            <span>Damascus (GMT+3)</span>
+            <span class="text-brand">● Available Q1 2026</span>
+        </div>
+
+        <button onclick="copyEmail()" class="group relative px-5 py-2 bg-white/5 border border-white/10 hover:border-brand transition-all overflow-hidden rounded-sm">
+            <div class="absolute inset-0 bg-brand translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+            <span class="relative font-mono text-[10px] uppercase font-bold group-hover:text-black transition-colors flex items-center gap-2">
+                <span class="material-icons-round text-[12px]">content_copy</span>
+                Copy Email
             </span>
         </button>
     </nav>
 
-    <main id="smooth-wrapper">
+    <main>
         
-        <section class="min-h-screen flex items-center px-6 md:px-12 pt-20 relative">
-            <div class="w-full max-w-[1600px] mx-auto">
-                <h1 class="font-display font-bold text-[13vw] leading-[0.8] tracking-[-0.03em] text-white">
-                    <div class="char-reveal"><span>VISUAL</span></div><br>
-                    <div class="char-reveal"><span class="text-transparent" style="-webkit-text-stroke: 1px rgba(255,255,255,0.8);">SYSTEMS</span></div><br>
-                    <div class="flex flex-wrap items-center gap-6">
-                        <div class="char-reveal"><span class="text-neon">ARCHITECT</span></div>
-                        <div class="hidden md:block w-32 h-[1px] bg-white/20 mt-4 hero-line origin-left scale-x-0"></div>
-                        <p class="font-mono text-xs text-white/50 max-w-xs mt-4 hero-text opacity-0">
-                            Damascus-based Senior Designer.<br>
-                            Engineering digital dominance.
+        <section class="min-h-[90vh] flex flex-col justify-center px-6 md:px-12 relative pt-20">
+            <div class="max-w-[1200px] mx-auto w-full">
+                
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-8 w-fit reveal-hero opacity-0">
+                    <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
+                    <span class="font-mono text-[10px] text-white/70 uppercase tracking-wide">Specialized for Series A+ Fintech</span>
+                </div>
+
+                <h1 class="font-display font-medium text-[10vw] md:text-[7vw] leading-[0.9] tracking-[-0.02em] text-white mb-8">
+                    <div class="word-reveal"><span>SCALING</span></div>
+                    <div class="word-reveal"><span class="text-white/40">DIGITAL</span></div>
+                    <div class="word-reveal"><span>TRUST.</span></div>
+                </h1>
+
+                <div class="grid md:grid-cols-12 gap-8 items-start reveal-hero opacity-0">
+                    <div class="md:col-span-5">
+                        <p class="text-lg text-[#888] leading-relaxed">
+                            I build enterprise-grade design systems for SaaS companies in KSA & MENA. 
+                            Bridging the gap between <span class="text-white">Silicon Valley aesthetics</span> and <span class="text-white">Regional market needs</span>.
                         </p>
                     </div>
-                </h1>
-            </div>
-            
-            <div class="absolute bottom-12 left-6 md:left-12 font-mono text-[10px] text-white/30 uppercase tracking-widest hero-text opacity-0">
-                Status: Available Q1 2026<br>
-                Loc: Syria (GMT+3)
-            </div>
-        </section>
-
-        <section class="py-32 px-6 md:px-12 border-t border-white/10 bg-[#080808]">
-            <div class="max-w-[1400px] mx-auto flex flex-col gap-32">
-                
-                <article class="project-card group cursor-pointer" data-cursor="VIEW_CASE">
-                    <div class="grid md:grid-cols-12 gap-8 items-center">
-                        <div class="md:col-span-7 img-wrapper aspect-video bg-white/5">
-                            <div class="img-overlay"></div>
-                            <img src="https://images.unsplash.com/photo-1481487484168-9b930d5b7960?q=80&w=2670&auto=format&fit=crop" class="w-full h-full object-cover" alt="Fintech">
-                        </div>
-                        <div class="md:col-span-5 md:pl-8">
-                            <div class="font-mono text-neon text-xs mb-2 tracking-widest">01 / FINTECH</div>
-                            <h2 class="font-display text-5xl md:text-6xl text-white mb-4 group-hover:text-neon transition-colors">CLIENTERO</h2>
-                            <p class="text-[#888] text-sm leading-relaxed max-w-sm mb-6">
-                                Total brand overhaul for the Saudi Fintech giant. 200% increase in user retention via motion-led UI.
-                            </p>
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 border border-white/10 text-[9px] font-mono text-white/40 uppercase">Strategy</span>
-                                <span class="px-2 py-1 border border-white/10 text-[9px] font-mono text-white/40 uppercase">Motion</span>
-                            </div>
-                        </div>
+                    <div class="md:col-span-7 flex flex-wrap gap-4 font-mono text-xs text-brand">
+                        <span class="px-3 py-2 border border-white/10 rounded bg-white/5">● RTL NATIVE</span>
+                        <span class="px-3 py-2 border border-white/10 rounded bg-white/5">● DESIGN SYSTEMS</span>
+                        <span class="px-3 py-2 border border-white/10 rounded bg-white/5">● HIGH-CONVERSION UI</span>
                     </div>
-                </article>
-
-                <article class="project-card group cursor-pointer" data-cursor="VIEW_CASE">
-                    <div class="grid md:grid-cols-12 gap-8 items-center">
-                        <div class="md:col-span-5 md:pr-8 order-2 md:order-1 text-left md:text-right flex flex-col items-start md:items-end">
-                            <div class="font-mono text-neon text-xs mb-2 tracking-widest">02 / BRANDING</div>
-                            <h2 class="font-display text-5xl md:text-6xl text-white mb-4 group-hover:text-neon transition-colors">SYRPRO</h2>
-                            <p class="text-[#888] text-sm leading-relaxed max-w-sm mb-6">
-                                Corporate identity unification. Installing a future-proof design language that scales globally.
-                            </p>
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 border border-white/10 text-[9px] font-mono text-white/40 uppercase">Identity</span>
-                                <span class="px-2 py-1 border border-white/10 text-[9px] font-mono text-white/40 uppercase">Guidelines</span>
-                            </div>
-                        </div>
-                        <div class="md:col-span-7 img-wrapper aspect-video bg-white/5 order-1 md:order-2">
-                            <div class="img-overlay"></div>
-                            <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2680&auto=format&fit=crop" class="w-full h-full object-cover" alt="Syrpro">
-                        </div>
-                    </div>
-                </article>
+                </div>
 
             </div>
         </section>
 
-        <footer class="min-h-[70vh] flex flex-col justify-center items-center text-center relative overflow-hidden">
-            <div class="font-mono text-xs text-neon mb-4 tracking-widest">START A PROJECT</div>
-            <button onclick="copyEmail()" class="font-display font-bold text-[10vw] leading-[0.9] text-white hover:text-neon transition-colors cursor-pointer" data-cursor="COPY_EMAIL">
-                LET'S TALK
-            </button>
-            <div class="mt-8 font-mono text-xs text-white/40">ghaidakalosh008@gmail.com</div>
+        <section class="py-24 px-4 md:px-12 border-t border-white/5">
+            <div class="max-w-[1400px] mx-auto">
+                <div class="flex justify-between items-end mb-16">
+                    <h2 class="font-display text-4xl text-white">SELECTED DATA</h2>
+                    <div class="font-mono text-xs text-white/40 hidden md:block">01 — 03</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]">
+                    
+                    <div class="md:col-span-2 bento-card rounded-xl p-8 flex flex-col justify-between group relative overflow-hidden cursor-pointer">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-40 group-hover:scale-105 transition-transform duration-700"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        
+                        <div class="relative z-10 flex justify-between items-start">
+                            <span class="px-3 py-1 bg-brand/20 text-brand border border-brand/30 rounded text-[10px] font-mono uppercase">Fintech</span>
+                            <span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-brand group-hover:border-brand group-hover:text-black transition-colors">↗</span>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <h3 class="font-display text-3xl text-white mb-2">CLIENTERO</h3>
+                            <p class="text-white/60 text-sm max-w-md">Complete dashboard overhaul for KSA's leading e-invoicing platform. Reduced churn by 18%.</p>
+                        </div>
+                    </div>
+
+                    <div class="bento-card rounded-xl p-8 flex flex-col justify-center items-center text-center group">
+                        <div class="w-16 h-16 mb-6 rounded-full bg-brand/10 flex items-center justify-center text-brand">
+                            <span class="material-icons-round text-3xl">trending_up</span>
+                        </div>
+                        <div class="font-display text-5xl text-white mb-2 group-hover:text-brand transition-colors">+200%</div>
+                        <div class="font-mono text-xs text-white/40 uppercase tracking-widest">User Retention</div>
+                        <p class="mt-4 text-xs text-white/40 px-4">Result achieved via cognitive load reduction in UI.</p>
+                    </div>
+
+                    <div class="bento-card rounded-xl p-8 flex flex-col justify-between group relative overflow-hidden md:col-span-1">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:scale-105 transition-transform duration-700"></div>
+                        <div class="absolute inset-0 bg-black/60"></div>
+                        
+                        <div class="relative z-10">
+                             <span class="px-3 py-1 bg-white/10 text-white border border-white/10 rounded text-[10px] font-mono uppercase">Identity</span>
+                        </div>
+                        <div class="relative z-10">
+                            <h3 class="font-display text-2xl text-white mb-1">SYRPRO</h3>
+                            <p class="text-white/60 text-xs">Global rebranding & Design System.</p>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 bento-card rounded-xl p-8 flex items-center justify-between group bg-brand/5 border-brand/20">
+                        <div class="max-w-md">
+                            <h3 class="font-display text-2xl text-white mb-2">Need a Scalable Design System?</h3>
+                            <p class="text-white/50 text-sm">I specialize in creating tokenized, component-based design systems that your dev team will actually love.</p>
+                            <div class="flex gap-4 mt-6">
+                                <div class="flex items-center gap-2 text-xs text-white/60 font-mono">
+                                    <span class="text-brand">✓</span> Figma Variables
+                                </div>
+                                <div class="flex items-center gap-2 text-xs text-white/60 font-mono">
+                                    <span class="text-brand">✓</span> React Handoff
+                                </div>
+                                <div class="flex items-center gap-2 text-xs text-white/60 font-mono">
+                                    <span class="text-brand">✓</span> Dark Mode
+                                </div>
+                            </div>
+                        </div>
+                        <div class="h-full flex items-center">
+                            <button onclick="copyEmail()" class="w-12 h-12 rounded-full bg-brand text-black flex items-center justify-center hover:scale-110 transition-transform">
+                                <span class="material-icons-round">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-20 border-t border-white/5 text-center">
+            <h2 class="font-display text-2xl text-white mb-8">READY TO SCALE?</h2>
+            <div class="inline-flex flex-col gap-4">
+                <button onclick="copyEmail()" class="font-mono text-xl text-brand hover:text-white transition-colors border-b border-brand/50 pb-1">
+                    ghaidakalosh008@gmail.com
+                </button>
+                <div id="toast" class="text-[10px] font-mono text-emerald-500 opacity-0 transition-opacity duration-300">
+                    COPIED TO CLIPBOARD
+                </div>
+            </div>
+            <div class="mt-12 text-[10px] font-mono text-white/20 uppercase">
+                © 2026 Ghaidak Alosh. Damascus Node.
+            </div>
         </footer>
 
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
     <script>
-        // --- 1. SETUP ---
         gsap.registerPlugin(ScrollTrigger);
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-        function raf(time) { lenis.raf(time); ScrollTrigger.update(); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
 
-        // --- 2. INTRO ANIMATION (Zero Delay) ---
+        // --- 1. HERO ANIMATION ---
         const tl = gsap.timeline();
-        
-        // Instant curtain lift once DOM is parsed
-        tl.to(".curtain", {
-            scaleY: 0,
-            transformOrigin: "top",
-            duration: 1,
-            ease: "power4.inOut",
+        tl.to(".word-reveal span", {
+            y: 0,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: "power4.out",
             delay: 0.2
         })
-        .add(() => document.body.classList.add('is-visible'), "-=0.5")
-        .to(".hero-line", { scaleX: 1, duration: 1, ease: "power2.out" }, "-=0.6")
-        .to(".hero-text", { opacity: 1, y: 0, duration: 1, stagger: 0.1 }, "-=0.8");
+        .to(".reveal-hero", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power2.out"
+        }, "-=0.8");
 
-        // --- 3. SCROLL ANIMATIONS ---
-        gsap.utils.toArray('.project-card').forEach(card => {
-            gsap.from(card.querySelector('img'), {
-                scale: 1.3,
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true
-                }
-            });
+        // --- 2. BENTO CARDS REVEAL ---
+        gsap.from(".bento-card", {
+            scrollTrigger: {
+                trigger: ".grid",
+                start: "top 80%",
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out"
         });
 
-        // --- 4. CURSOR SYSTEM ---
-        const cursor = document.getElementById('cursor');
-        const dot = cursor.querySelector('.cursor-dot');
-        const label = cursor.querySelector('.cursor-label');
-        
-        if (window.matchMedia("(pointer: fine)").matches) {
-            cursor.classList.remove('hidden');
-            
-            let mouseX = 0, mouseY = 0;
-            let cursorX = 0, cursorY = 0;
-
-            window.addEventListener('mousemove', e => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                
-                // Check hover targets
-                const target = e.target;
-                const isLink = target.closest('button') || target.closest('a') || target.closest('[data-cursor]');
-                const customText = target.closest('[data-cursor]')?.getAttribute('data-cursor');
-
-                if(isLink) {
-                    document.body.classList.add('hover-active');
-                    if(customText) label.innerText = customText.replace('_', ' ');
-                } else {
-                    document.body.classList.remove('hover-active');
-                    label.innerText = "";
-                }
-            });
-
-            // Smooth Follow
-            function animateCursor() {
-                cursorX += (mouseX - cursorX) * 0.15;
-                cursorY += (mouseY - cursorY) * 0.15;
-                cursor.style.transform = `translate(${cursorX - 6}px, ${cursorY - 6}px)`;
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
-        }
-
-        // --- 5. CLIPBOARD LOGIC (Conversion) ---
+        // --- 3. COPY FUNCTION ---
         function copyEmail() {
-            navigator.clipboard.writeText('ghaidakalosh008@gmail.com').then(() => {
-                const toast = document.getElementById('toast');
-                toast.style.transform = "translate(-50%, 50px)";
-                toast.style.opacity = "1";
-                setTimeout(() => {
-                    toast.style.transform = "translate(-50%, -100%)";
-                    toast.style.opacity = "0";
-                }, 2000);
-            });
+            navigator.clipboard.writeText('ghaidakalosh008@gmail.com');
+            const toast = document.getElementById('toast');
+            toast.style.opacity = '1';
+            setTimeout(() => toast.style.opacity = '0', 2000);
         }
     </script>
 </body>
