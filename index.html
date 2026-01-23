@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#05010D] antialiased selection:bg-[#5D3FD3] selection:text-white">
+<html lang="en" class="bg-[#030014] antialiased selection:bg-[#7000FF] selection:text-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ghaidak Alosh - Senior Brand Systems Architect. Specializing in Fintech & SaaS branding.">
-    <title>GHAIDAK ALOSH | SENIOR BRAND SYSTEMS</title>
+    <meta name="description" content="Ghaidak Alosh - Senior Brand Systems Architect.">
+    <title>GHAIDAK ALOSH | SYSTEM ARCHITECT</title>
     
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -18,16 +18,13 @@
                         display: ['Clash Display', 'sans-serif'],
                     },
                     colors: {
-                        void: '#05010D',
-                        royal: '#5D3FD3', 
-                        mist: '#BFA3FF',
-                        glass: 'rgba(255, 255, 255, 0.03)',
+                        void: '#030014',
+                        neon: '#7000FF', 
+                        mist: '#E0D4FC',
+                        glass: 'rgba(255, 255, 255, 0.02)',
                     },
                     backgroundImage: {
-                        'gradient-royal': 'linear-gradient(135deg, #5D3FD3 0%, #05010D 100%)',
-                    },
-                    animation: {
-                        'spin-slow': 'spin 12s linear infinite',
+                        'gradient-glow': 'conic-gradient(from 180deg at 50% 50%, #7000FF 0deg, #00C2FF 180deg, #7000FF 360deg)',
                     }
                 }
             }
@@ -36,195 +33,232 @@
 
     <style>
         /* --- CORE PHYSICS --- */
-        body { margin: 0; overflow-x: hidden; color: #E0D4FC; cursor: none; }
+        body { margin: 0; overflow-x: hidden; color: #E0D4FC; cursor: none; background: #030014; }
         
-        /* Fallback: If JS fails, restore cursor */
-        @media (hover: none) {
-            body { cursor: auto; }
-            .cursor-dot, .cursor-outline { display: none; }
+        /* Smooth Scroll Container */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        
+        /* The "Torch" Lighting - Dynamic Mouse Follower */
+        .ambient-light {
+            position: fixed;
+            top: 0; left: 0;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(112, 0, 255, 0.15) 0%, rgba(3, 0, 20, 0) 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: screen;
+            transition: opacity 0.5s ease;
         }
 
-        /* The "Noise" Texture */
+        /* Noise Texture */
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
             pointer-events: none; z-index: 50; mix-blend-mode: overlay;
         }
 
         /* Custom Cursor */
-        .cursor-dot { width: 6px; height: 6px; background: #BFA3FF; position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: exclusion; top: 0; left: 0; }
-        .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(191, 163, 255, 0.5); position: fixed; border-radius: 50%; pointer-events: none; z-index: 9998; transition: width 0.2s, height 0.2s, background-color 0.2s; mix-blend-mode: exclusion; top: 0; left: 0; }
+        .cursor-dot { width: 8px; height: 8px; background: white; position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: exclusion; top: 0; left: 0; }
+        .cursor-outline { 
+            width: 50px; height: 50px; 
+            border: 1px solid rgba(255, 255, 255, 0.3); 
+            position: fixed; border-radius: 50%; pointer-events: none; z-index: 9998; 
+            top: 0; left: 0;
+            transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
+                        height 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+                        background-color 0.3s;
+        }
 
-        /* Typography & Layout */
-        .hero-title { font-size: clamp(3rem, 8vw, 7rem); line-height: 0.95; letter-spacing: -0.02em; }
+        /* Typography */
+        .hero-title { font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.9; letter-spacing: -0.03em; }
+        .hero-stroke { -webkit-text-stroke: 1px rgba(255,255,255,0.3); color: transparent; }
         
-        /* Glass Cards */
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        /* Cards & Glass */
+        .glass-panel {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+            transition: border-color 0.3s, transform 0.3s;
         }
-        .glass-card:hover {
-            border-color: var(--royal);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
+        .glass-panel:hover {
+            border-color: rgba(112, 0, 255, 0.4);
         }
 
-        /* Reveal Animation Utilities */
-        .reveal-text { transform: translateY(100%); opacity: 0; }
-        .line-wrapper { overflow: hidden; }
+        /* Animation Utilities */
+        .char-split { display: inline-block; opacity: 0; transform: translateY(100%); will-change: transform, opacity; }
+        .skew-container { will-change: transform; transform-style: preserve-3d; }
+        
+        /* Preloader */
+        .loader-curtain {
+            position: fixed; inset: 0; background: #030014; z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+        }
     </style>
 </head>
 <body>
 
+    <div class="loader-curtain">
+        <div class="font-display text-white text-2xl animate-pulse">INITIALIZING SYSTEM...</div>
+    </div>
+
     <div class="noise-overlay"></div>
-    <div class="cursor-dot" style="transform: translate(-100px, -100px)"></div>
-    <div class="cursor-outline" style="transform: translate(-100px, -100px)"></div>
+    <div class="ambient-light" id="torch"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
     <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
-        <div class="font-display font-bold text-xl tracking-tight text-white hover:text-royal transition-colors duration-300">GHAIDAK<span class="text-royal">.</span></div>
+        <div class="font-display font-bold text-xl tracking-tight text-white hover:text-neon transition-colors duration-300">GHAIDAK<span class="text-neon">.</span></div>
         
-        <div class="hidden md:flex gap-8 font-mono text-xs text-mist/60 uppercase tracking-widest">
-            <span>Exp: 6 Years</span>
-            <span>Based: Damascus Node</span>
-            <span class="text-royal animate-pulse">● Available Q1</span>
+        <div class="hidden md:flex gap-12 font-mono text-[10px] text-mist/50 uppercase tracking-[0.2em]">
+            <span>System: Online</span>
+            <span>Loc: Damascus</span>
+            <span class="text-neon flex items-center gap-2"><span class="w-1.5 h-1.5 bg-neon rounded-full animate-pulse"></span> Available Q1</span>
         </div>
 
-        <a href="mailto:ghaidakalosh008@gmail.com" class="group relative px-6 py-2 overflow-hidden rounded-full border border-white/10 bg-white/5">
-            <div class="absolute inset-0 w-full h-full bg-royal/80 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            <span class="relative font-mono text-xs text-white group-hover:font-bold transition-all">INITIATE PROJECT</span>
+        <a href="mailto:ghaidakalosh008@gmail.com" class="magnetic-btn group relative px-8 py-3 overflow-hidden rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+            <div class="absolute inset-0 w-full h-full bg-neon/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]"></div>
+            <span class="relative font-mono text-xs text-white group-hover:font-bold transition-all z-10">INITIATE</span>
         </a>
     </nav>
 
-    <main class="relative z-10 pt-32 px-6 md:px-12 max-w-[1600px] mx-auto">
+    <main class="skew-container relative z-10 pt-40 px-6 md:px-12 max-w-[1800px] mx-auto pb-40">
 
-        <section class="min-h-[85vh] flex flex-col justify-center relative">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-royal blur-[150px] opacity-10 rounded-full pointer-events-none animate-pulse"></div>
+        <section class="min-h-[80vh] flex flex-col justify-center relative mb-40">
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-neon blur-[200px] opacity-20 rounded-full pointer-events-none animate-pulse"></div>
 
             <div class="relative z-10">
-                <div class="line-wrapper mb-4">
-                    <p class="font-mono text-mist text-sm tracking-widest uppercase reveal-load">Senior Brand & Marketing Designer</p>
+                <div class="overflow-hidden mb-6">
+                    <p class="font-mono text-neon text-sm tracking-[0.2em] uppercase reveal-text">Senior Brand Architect</p>
                 </div>
                 
-                <h1 class="hero-title font-display font-medium text-white mb-10">
-                    <div class="line-wrapper"><span class="block reveal-load">SYSTEMS</span></div>
-                    <div class="line-wrapper"><span class="block reveal-load text-white/30">NOT JUST</span></div>
-                    <div class="line-wrapper"><span class="block reveal-load">DECORATION.</span></div>
+                <h1 class="hero-title font-medium text-white mb-16 leading-[0.85]">
+                    <div class="overflow-hidden"><span class="block reveal-text">SYSTEMS</span></div>
+                    <div class="overflow-hidden"><span class="block reveal-text text-white/20 italic font-light">OVER</span></div>
+                    <div class="overflow-hidden"><span class="block reveal-text">DECORATION</span></div>
                 </h1>
 
-                <div class="grid md:grid-cols-12 gap-8 items-end reveal-load" style="transition-delay: 0.4s;">
+                <div class="grid md:grid-cols-12 gap-8 items-end border-t border-white/10 pt-8 reveal-fade">
                     <div class="md:col-span-5">
-                        <p class="text-xl text-mist/80 leading-relaxed">
-                            I architect scalable brand systems for Fintech & SaaS. 
-                            My work bridges the gap between <span class="text-white border-b border-royal">Silicon Valley aesthetics</span> and <span class="text-white border-b border-royal">MENA market nuances</span>.
+                        <p class="text-lg text-mist/70 leading-relaxed max-w-md">
+                            I architect scalable brand systems. 
+                            My work bridges <span class="text-white">Silicon Valley precision</span> with <span class="text-white">MENA market nuance</span>.
                         </p>
                     </div>
-                    <div class="md:col-span-7 flex justify-end gap-12 text-center">
+                    <div class="md:col-span-7 flex justify-end gap-16 text-center">
                         <div>
-                            <div class="font-display text-4xl text-white">70+</div>
-                            <div class="font-mono text-[10px] text-mist uppercase mt-2">Clients Served</div>
+                            <div class="font-display text-5xl text-white">70+</div>
+                            <div class="font-mono text-[9px] text-white/30 uppercase mt-2 tracking-widest">Deployments</div>
                         </div>
                         <div>
-                            <div class="font-display text-4xl text-white">C2</div>
-                            <div class="font-mono text-[10px] text-mist uppercase mt-2">English Proficiency</div>
-                        </div>
-                        <div>
-                            <div class="font-display text-4xl text-white">2.5x</div>
-                            <div class="font-mono text-[10px] text-mist uppercase mt-2">ROAS Growth</div>
+                            <div class="font-display text-5xl text-white">C2</div>
+                            <div class="font-mono text-[9px] text-white/30 uppercase mt-2 tracking-widest">Lingua Franca</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-32 border-t border-white/5">
-            <div class="flex justify-between items-end mb-20">
-                <h2 class="font-display text-4xl text-white">SELECTED WORKS</h2>
-                <div class="font-mono text-xs text-mist">(2023 — 2026)</div>
+        <section class="py-20">
+            <div class="flex justify-between items-end mb-24 px-2">
+                <h2 class="font-display text-4xl text-white">SELECTED INDEX</h2>
+                <div class="font-mono text-xs text-mist/40">[2023 — 2026]</div>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                
-                <div class="glass-card rounded-2xl p-8 md:p-12 relative group overflow-hidden min-h-[500px] flex flex-col justify-end">
-                    <div class="absolute inset-0 opacity-40 group-hover:opacity-20 transition-opacity duration-700 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-                    <div class="absolute top-10 right-10 w-32 h-32 rounded-full border border-royal/30 group-hover:scale-150 transition-transform duration-1000"></div>
+                <div class="glass-panel rounded-lg p-8 md:p-12 min-h-[600px] flex flex-col justify-between group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0"></div>
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1481487484168-9b930d5b7960?q=80&w=2671&auto=format&fit=crop')] bg-cover bg-center opacity-0 group-hover:opacity-40 transition-opacity duration-700 grayscale group-hover:grayscale-0 transform group-hover:scale-105 transition-transform duration-1000"></div>
 
-                    <div class="relative z-10">
-                        <div class="font-mono text-royal text-xs mb-4 flex items-center gap-2">
-                            <span class="w-2 h-2 bg-royal rounded-full"></span> NETHERLANDS / SYRIA
-                        </div>
-                        <h3 class="font-display text-3xl md:text-4xl text-white mb-4">SyrproNet Identity</h3>
-                        <p class="text-mist/70 text-lg mb-6 max-w-md">
-                            Architected the visual system for a network of 2,000+ experts. Established strict grid structures for "SyrproBridges" editorial content.
+                    <div class="relative z-10 w-full flex justify-between border-b border-white/10 pb-6 mb-auto">
+                        <span class="font-mono text-xs text-white/50">001</span>
+                        <span class="font-mono text-xs text-neon">SYRPRONET</span>
+                    </div>
+
+                    <div class="relative z-10 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                        <h3 class="font-display text-4xl text-white mb-4">Network Identity</h3>
+                        <p class="text-mist/60 text-sm max-w-sm mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            Strict grid structures for 2,000+ expert network. Editorial system design.
                         </p>
-                        <div class="flex flex-wrap gap-3 font-mono text-xs text-white/40 uppercase">
-                            <span class="border border-white/10 px-3 py-1 rounded-full">Editorial Grid</span>
-                            <span class="border border-white/10 px-3 py-1 rounded-full">Brand Stewardship</span>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-[10px] text-white uppercase tracking-wider">Identity</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-[10px] text-white uppercase tracking-wider">Systems</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8 md:p-12 relative group overflow-hidden min-h-[500px] flex flex-col justify-end">
-                    <div class="absolute inset-0 bg-gradient-to-br from-royal/20 to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-700"></div>
-                    
-                    <div class="relative z-10">
-                        <div class="font-mono text-royal text-xs mb-4 flex items-center gap-2">
-                            <span class="w-2 h-2 bg-royal rounded-full"></span> SAUDI ARABIA
-                        </div>
-                        <h3 class="font-display text-3xl md:text-4xl text-white mb-4">Clientero SaaS</h3>
-                        <p class="text-mist/70 text-lg mb-6 max-w-md">
-                            Developed high-conversion ad creatives for an e-invoicing SaaS platform. Focused on churn reduction through improved UX communication.
+                <div class="glass-panel rounded-lg p-8 md:p-12 min-h-[600px] flex flex-col justify-between group relative overflow-hidden md:mt-24">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0"></div>
+                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-0 group-hover:opacity-40 transition-opacity duration-700 grayscale group-hover:grayscale-0 transform group-hover:scale-105 transition-transform duration-1000"></div>
+
+                    <div class="relative z-10 w-full flex justify-between border-b border-white/10 pb-6 mb-auto">
+                        <span class="font-mono text-xs text-white/50">002</span>
+                        <span class="font-mono text-xs text-neon">CLIENTERO SAAS</span>
+                    </div>
+
+                    <div class="relative z-10 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                        <h3 class="font-display text-4xl text-white mb-4">Conversion Systems</h3>
+                        <p class="text-mist/60 text-sm max-w-sm mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            High-frequency ad creatives for FinTech. 2.5x ROAS achieved.
                         </p>
-                        <div class="flex flex-wrap gap-3 font-mono text-xs text-white/40 uppercase">
-                            <span class="border border-white/10 px-3 py-1 rounded-full">B2B SaaS</span>
-                            <span class="border border-white/10 px-3 py-1 rounded-full">Social Ads</span>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-[10px] text-white uppercase tracking-wider">Growth</span>
+                            <span class="px-3 py-1 border border-white/20 rounded-full text-[10px] text-white uppercase tracking-wider">UI/UX</span>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <section class="py-32 border-t border-white/5">
+        <section class="py-40 border-t border-white/5">
             <div class="grid md:grid-cols-12 gap-16">
-                <div class="md:col-span-4">
-                    <h2 class="font-display text-4xl text-white mb-6">NEURO-DESIGN METHODOLOGY</h2>
-                    <p class="text-mist/60 leading-relaxed">
-                        Top agencies don't guess. They follow a protocol. My workflow integrates <span class="text-white">Cognitive Science</span> with <span class="text-white">AI Automation</span> (Veo, GPT-5) to deliver speed and precision.
+                <div class="md:col-span-4 sticky top-32 h-fit">
+                    <h2 class="font-display text-3xl text-white mb-6">THE PROTOCOL</h2>
+                    <p class="text-mist/50 text-sm leading-relaxed">
+                        Design without data is art. Design with data is a weapon. I integrate <span class="text-white">Cognitive Science</span> with <span class="text-neon">AI Automation</span>.
                     </p>
                 </div>
-                <div class="md:col-span-8 grid gap-8">
-                    <div class="border-l border-white/10 pl-8 hover:border-royal transition-colors duration-500 group">
-                        <h3 class="font-display text-2xl text-white mb-2 group-hover:translate-x-2 transition-transform">01. DECONSTRUCT</h3>
-                        <p class="text-sm text-mist/60">Analyzing market gaps using data, not just aesthetics. (e.g., Vera Freelancer Platform Strategy).</p>
+                <div class="md:col-span-8 grid gap-0">
+                    <div class="py-12 border-b border-white/10 group hover:bg-white/5 transition-colors duration-500 px-6 cursor-none">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-display text-4xl text-white group-hover:translate-x-4 transition-transform duration-300">DECONSTRUCT</h3>
+                            <span class="font-mono text-xs text-white/20">01</span>
+                        </div>
+                        <p class="text-mist/40 max-w-md group-hover:text-mist/80 transition-colors">Analyzing market gaps. Strategy before pixels.</p>
                     </div>
-                    <div class="border-l border-white/10 pl-8 hover:border-royal transition-colors duration-500 group">
-                        <h3 class="font-display text-2xl text-white mb-2 group-hover:translate-x-2 transition-transform">02. TOKENIZE</h3>
-                        <p class="text-sm text-mist/60">Building atomic design systems in Figma that scale globally. (e.g., SyrproNet VP Announcements).</p>
+                    <div class="py-12 border-b border-white/10 group hover:bg-white/5 transition-colors duration-500 px-6 cursor-none">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-display text-4xl text-white group-hover:translate-x-4 transition-transform duration-300">TOKENIZE</h3>
+                            <span class="font-mono text-xs text-white/20">02</span>
+                        </div>
+                        <p class="text-mist/40 max-w-md group-hover:text-mist/80 transition-colors">Atomic design systems. Scalable. Modular.</p>
                     </div>
-                    <div class="border-l border-white/10 pl-8 hover:border-royal transition-colors duration-500 group">
-                        <h3 class="font-display text-2xl text-white mb-2 group-hover:translate-x-2 transition-transform">03. DOMINATE</h3>
-                        <p class="text-sm text-mist/60">Deploying high-frequency assets via AI tools for maximum ROAS. 22+ Video Ads delivered.</p>
+                    <div class="py-12 border-b border-white/10 group hover:bg-white/5 transition-colors duration-500 px-6 cursor-none">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-display text-4xl text-white group-hover:translate-x-4 transition-transform duration-300">DOMINATE</h3>
+                            <span class="font-mono text-xs text-white/20">03</span>
+                        </div>
+                        <p class="text-mist/40 max-w-md group-hover:text-mist/80 transition-colors">Deploying high-frequency assets via AI tools.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="py-32 text-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-royal opacity-10"></div>
-            
-            <h2 class="relative z-10 font-display text-[10vw] leading-none text-white mix-blend-overlay hover:mix-blend-normal transition-all duration-500 cursor-pointer">
-                <a href="mailto:ghaidakalosh008@gmail.com">START NOW</a>
+        <footer class="py-40 text-center relative overflow-hidden">
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80vw] h-[500px] bg-gradient-radial from-neon/10 to-transparent pointer-events-none"></div>
+
+            <h2 class="relative z-10 font-display text-[12vw] leading-none text-white mix-blend-overlay hover:mix-blend-normal transition-all duration-500 cursor-pointer group">
+                <a href="mailto:ghaidakalosh008@gmail.com" class="inline-block hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]">
+                    START NOW
+                </a>
             </h2>
             
-            <div class="relative z-10 mt-12 flex flex-col items-center gap-4">
-                <div class="inline-flex items-center gap-2 px-4 py-2 bg-royal/10 border border-royal/30 rounded-full">
-                    <span class="w-2 h-2 bg-[#00FF41] rounded-full animate-pulse"></span>
-                    <span class="font-mono text-xs text-royal uppercase tracking-widest">1 Slot Open for Q1 2026</span>
-                </div>
-                <div class="font-mono text-[10px] text-white/20 uppercase mt-8">
+            <div class="relative z-10 mt-16">
+                 <div class="font-mono text-[10px] text-white/20 uppercase tracking-[0.3em]">
                     © 2026 Ghaidak Alosh. Damascus Node.
                 </div>
             </div>
@@ -232,84 +266,133 @@
 
     </main>
 
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Reveal on Load
-        const tl = gsap.timeline();
-        tl.to(".reveal-load", {
-            y: 0,
-            opacity: 1,
+        // 1. Initialize Lenis (Smooth Scroll)
+        const lenis = new Lenis({
             duration: 1.2,
-            stagger: 0.1,
-            ease: "power4.out",
-            delay: 0.2
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
         });
 
-        // 2. Optimized Cursor Logic
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Connect Lenis to ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time)=>{
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        // 2. Velocity Skew Engine
+        // This creates the "Motion Blur" feeling by skewing content based on speed
+        let proxy = { skew: 0 },
+            skewSetter = gsap.quickSetter(".skew-container", "skewY", "deg"),
+            clamp = gsap.utils.clamp(-5, 5); // Don't skew too much
+
+        ScrollTrigger.create({
+            onUpdate: (self) => {
+                let skew = clamp(self.getVelocity() / -300);
+                // If velocity is high, skew immediately, otherwise ease back to 0
+                if (Math.abs(skew) > Math.abs(proxy.skew)) {
+                    proxy.skew = skew;
+                    skewSetter(proxy.skew);
+                } else {
+                    proxy.skew += (skew - proxy.skew) * 0.2; // Ease the skew return
+                    skewSetter(proxy.skew);
+                }
+            }
+        });
+
+        // 3. Dynamic Torch & Cursor
+        const torch = document.getElementById('torch');
         const dot = document.querySelector('.cursor-dot');
         const outline = document.querySelector('.cursor-outline');
 
-        // Only activate custom cursor on non-touch devices
+        // Initial Center
+        gsap.set([dot, outline, torch], { xPercent: -50, yPercent: -50, opacity: 0 });
+
         if (window.matchMedia("(hover: hover)").matches) {
+            gsap.to([dot, outline, torch], { opacity: 1, duration: 0.5 });
+
             window.addEventListener('mousemove', (e) => {
-                const posX = e.clientX;
-                const posY = e.clientY;
+                const x = e.clientX;
+                const y = e.clientY;
 
+                // Torch follows loosely
+                gsap.to(torch, { x: x, y: y, duration: 1.5, ease: "power2.out" });
+                
                 // Dot follows instantly
-                dot.style.transform = `translate(${posX - 3}px, ${posY - 3}px)`;
-
-                // Outline follows with slight delay via GSAP for smoothness
-                gsap.to(outline, {
-                    x: posX - 20,
-                    y: posY - 20,
-                    duration: 0.5,
-                    ease: "power2.out"
-                });
-            });
-
-            // Hover interactions
-            document.querySelectorAll('a, button, .glass-card, .mix-blend-overlay').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    gsap.to(outline, { 
-                        width: 80, 
-                        height: 80, 
-                        x: "-=20", // Compensate for new width
-                        y: "-=20", 
-                        backgroundColor: 'rgba(191, 163, 255, 0.1)', 
-                        border: 'none',
-                        mixBlendMode: 'difference'
-                    });
-                });
-                el.addEventListener('mouseleave', () => {
-                    gsap.to(outline, { 
-                        width: 40, 
-                        height: 40,
-                        x: "+=20", // Return to center
-                        y: "+=20",
-                        backgroundColor: 'transparent', 
-                        border: '1px solid rgba(191, 163, 255, 0.5)',
-                        mixBlendMode: 'exclusion'
-                    });
-                });
+                gsap.set(dot, { x: x, y: y });
+                
+                // Outline follows with delay
+                gsap.to(outline, { x: x, y: y, duration: 0.6, ease: "power3.out" });
             });
         }
 
-        // 3. Parallax & Blur on Scroll
-        gsap.utils.toArray('.glass-card').forEach(card => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 90%",
-                },
-                y: 100,
-                opacity: 0,
-                duration: 1,
-                ease: "power3.out"
+        // 4. Hero Entry Sequence
+        const tl = gsap.timeline();
+        
+        // Remove loader
+        tl.to(".loader-curtain", {
+            yPercent: -100,
+            duration: 1.2,
+            ease: "power4.inOut"
+        })
+        .from(".reveal-text", {
+            y: 120,
+            opacity: 0,
+            duration: 1.5,
+            stagger: 0.1,
+            ease: "power4.out",
+            skewY: 5
+        }, "-=0.5")
+        .from(".reveal-fade", {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            ease: "power2.out"
+        }, "-=1");
+
+        // 5. Magnetic Button Effect
+        const magneticBtns = document.querySelectorAll('.magnetic-btn');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                gsap.to(btn, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+                
+                // Scale cursor up on hover
+                gsap.to(outline, { width: 80, height: 80, mixBlendMode: 'difference', backgroundColor: 'white', border: 'none' });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+                gsap.to(outline, { width: 50, height: 50, mixBlendMode: 'exclusion', backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.3)' });
             });
         });
+
     </script>
 </body>
 </html>
