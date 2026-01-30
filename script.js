@@ -1,29 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. SMOOTH SCROLL (Disabled on mobile for native feel, enabled on desktop)
-    const isMobile = window.innerWidth < 800;
-    
-    if (!isMobile) {
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-        });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
-    }
+    // 1. SMOOTH SCROLL (LENIS)
+    // We disable 'smoothTouch' to keep the native Samsung feel on mobile
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothTouch: false 
+    });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
 
-    // 2. CURTAIN LOGIC (Dual Mode: Hover for Desktop, Scroll for Mobile)
+    // 2. BACKGROUND LOGIC (THE HYBRID ENGINE)
     const items = document.querySelectorAll('.project-item');
     const allBgs = document.querySelectorAll('.curtain-img');
     const defaultBg = document.querySelector('#bg-default');
 
-    // Function to activate a specific background
-    const activateBg = (targetId) => {
+    // Helper: Switch Background
+    const switchBg = (targetId) => {
         const targetBg = document.getElementById(targetId);
         if(targetBg) {
-            // Fade out others
             gsap.to(allBgs, { opacity: 0, duration: 0.5, overwrite: true });
-            // Fade in target
             gsap.to(targetBg, { 
                 opacity: 0.3, 
                 scale: 1, 
@@ -34,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Function to reset to default
+    // Helper: Reset Background
     const resetBg = () => {
         gsap.to(allBgs, { opacity: 0, duration: 0.5, overwrite: true });
         gsap.to(defaultBg, { 
@@ -45,19 +41,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    if (!isMobile) {
-        // --- DESKTOP: HOVER INTERACTION ---
+    // DETECT INPUT TYPE
+    // If the device supports hovering (Desktop), use mouse events
+    if (window.matchMedia("(hover: hover)").matches) {
+        
         items.forEach(item => {
-            item.addEventListener('mouseenter', () => activateBg(item.getAttribute('data-bg')));
+            item.addEventListener('mouseenter', () => switchBg(item.getAttribute('data-bg')));
             item.addEventListener('mouseleave', resetBg);
         });
 
     } else {
-        // --- MOBILE: SCROLL INTERACTION (Intersection Observer) ---
+        // --- MOBILE SOLUTION: INTERSECTION OBSERVER ---
+        // This watches for when a project slides into the center of the screen
         
         const observerOptions = {
             root: null,
-            rootMargin: "-40% 0px -40% 0px", // Triggers when item is in the CENTER 20% of screen
+            // These margins define a "strip" in the middle of the screen (45% from top/bottom)
+            // When an item enters this strip, it triggers.
+            rootMargin: "-45% 0px -45% 0px", 
             threshold: 0
         };
 
@@ -65,9 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const targetId = entry.target.getAttribute('data-bg');
-                    activateBg(targetId);
+                    switchBg(targetId);
                     
-                    // Add visual highlight to the text too
+                    // Highlight the text to confirm selection to user
                     items.forEach(el => el.classList.remove('mobile-active'));
                     entry.target.classList.add('mobile-active');
                 }
@@ -77,13 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach(item => observer.observe(item));
     }
 
-    // 3. TEXT REVEAL ANIMATION
+    // 3. REVEAL ANIMATIONS
     gsap.from(".reveal-text", {
-        y: 80, 
-        opacity: 0, 
-        duration: 1.2, 
-        stagger: 0.1, 
-        ease: "power3.out", 
-        delay: 0.1
+        y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out", delay: 0.2
     });
 });
