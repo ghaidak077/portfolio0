@@ -73,4 +73,14 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.from(".reveal-text", {
         y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out", delay: 0.2
     });
+
+    // 4. NAV MORPHING LOGIC (Floating -> Full Width)
+    const nav = document.querySelector('.hud-nav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
 });
