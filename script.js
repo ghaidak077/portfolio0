@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. SMOOTH SCROLL (LENIS)
-    // Disabled 'smoothTouch' for better native mobile feel on S25
+    // 1. SMOOTH SCROLL (Native feel on mobile)
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -39,17 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // CHECK INPUT TYPE
     if (window.matchMedia("(hover: hover)").matches) {
-        // DESKTOP: Hover Logic
+        // DESKTOP: Mouse Enter/Leave
         items.forEach(item => {
             item.addEventListener('mouseenter', () => switchBg(item.getAttribute('data-bg')));
             item.addEventListener('mouseleave', resetBg);
         });
     } else {
-        // MOBILE: Scroll Logic (Intersection Observer)
+        // MOBILE: Scroll (Intersection Observer)
         const observerOptions = {
             root: null,
-            rootMargin: "-45% 0px -45% 0px", // Triggers in center of screen
+            rootMargin: "-45% 0px -45% 0px", // Trigger in center
             threshold: 0
         };
 
