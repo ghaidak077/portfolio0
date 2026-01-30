@@ -25,8 +25,8 @@ body {
     background: var(--bg);
     color: var(--ink);
     font-family: var(--font-data);
-    overflow-x: hidden; /* CRITICAL FIX: Prevents S25 horizontal scroll */
-    width: 100%;        /* CRITICAL FIX: Changed from 100vw */
+    overflow-x: hidden;
+    width: 100%;
     position: relative;
 }
 
@@ -87,11 +87,16 @@ main { position: relative; z-index: 10; width: 100%; overflow: hidden; }
 }
 .mega-type {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 13vw, 12rem); 
+    /* Lower bound of clamp increased to 3.5rem, upper bound slightly reduced to fit mobile */
+    font-size: clamp(3.5rem, 12vw, 11rem); 
     line-height: 0.85; letter-spacing: -0.03em;
     text-transform: uppercase; font-weight: 800;
     margin-bottom: var(--space-lg); mix-blend-mode: normal; 
-    word-break: break-word; 
+    
+    /* PREVENT SPLIT WORDS */
+    word-break: keep-all; 
+    white-space: normal; 
+    overflow-wrap: normal;
 }
 .indent { margin-left: 10vw; display: block; color: var(--accent); }
 .hero-meta {
@@ -265,8 +270,16 @@ main { position: relative; z-index: 10; width: 100%; overflow: hidden; }
 
 @media(max-width: 768px) {
     .hero-section { padding-top: 18vh; }
-    .mega-type { font-size: 13vw; margin-bottom: 2rem; }
+    
+    .mega-type { 
+        /* Safe size for small screens to prevent wrapping */
+        font-size: 11vw; 
+        margin-bottom: 2rem; 
+    }
+    
+    /* Align left on mobile */
     .indent { margin-left: 0; }
+    
     .site-footer { flex-direction: column; gap: 1rem; text-align: center; }
     .marquee-content span { font-size: 1.5rem; margin: 0 1rem; }
 }
