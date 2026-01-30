@@ -17,24 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const switchBg = (targetId) => {
         const targetBg = document.getElementById(targetId);
         if(targetBg) {
-            gsap.to(allBgs, { opacity: 0, duration: 0.5, overwrite: true });
+            // SNAPPIER TIMING: 0.25s duration + simple easing
+            gsap.to(allBgs, { opacity: 0, duration: 0.25, overwrite: true });
             gsap.to(targetBg, { 
                 opacity: 0.3, 
                 scale: 1, 
                 filter: "blur(0px) grayscale(0%)",
-                duration: 0.6,
-                ease: "power2.out"
+                duration: 0.3, 
+                ease: "power1.out"
             });
         }
     };
 
     const resetBg = () => {
-        gsap.to(allBgs, { opacity: 0, duration: 0.5, overwrite: true });
+        gsap.to(allBgs, { opacity: 0, duration: 0.25, overwrite: true });
         gsap.to(defaultBg, { 
             opacity: 0.25, 
             scale: 1,
             filter: "blur(20px) grayscale(100%)",
-            duration: 0.6 
+            duration: 0.3,
+            ease: "power1.out"
         });
     };
 
