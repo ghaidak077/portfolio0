@@ -162,12 +162,17 @@ body.hovering .cursor-outline{width:50px;height:50px;background-color:rgba(255,1
     transition: height 0.2s ease;
 }
 
-/* Animation when Active */
-.nav-audio-btn.active .eq-bar { animation: eq-bounce 1s infinite ease-in-out; }
-.nav-audio-btn.active .eq-bar:nth-child(1) { animation-duration: 0.8s; }
-.nav-audio-btn.active .eq-bar:nth-child(2) { animation-duration: 1.1s; animation-delay: 0.1s; }
-.nav-audio-btn.active .eq-bar:nth-child(3) { animation-duration: 1.3s; animation-delay: 0.2s; }
-.nav-audio-btn.active .eq-bar:nth-child(4) { animation-duration: 0.9s; animation-delay: 0.3s; }
+/* --- FIXED: Constant Animation (Gray when OFF, Gold when ON) --- */
+/* We removed the .active check here so it always runs */
+.nav-audio-btn .eq-bar { 
+    animation: eq-bounce 1s infinite ease-in-out; 
+}
+
+/* Stagger delays need to apply always as well */
+.nav-audio-btn .eq-bar:nth-child(1) { animation-duration: 0.8s; }
+.nav-audio-btn .eq-bar:nth-child(2) { animation-duration: 1.1s; animation-delay: 0.1s; }
+.nav-audio-btn .eq-bar:nth-child(3) { animation-duration: 1.3s; animation-delay: 0.2s; }
+.nav-audio-btn .eq-bar:nth-child(4) { animation-duration: 0.9s; animation-delay: 0.3s; }
 
 @keyframes eq-bounce {
     0%, 100% { height: 2px; }
