@@ -1,0 +1,30 @@
+TL;DR: The System OverviewPhysical Layer: Your folder structure (Files).Logical Layer: Your page sections (HTML flow).Functional Layer: How JavaScript manipulates the DOM (Interactions).1. The Physical Layer (Directory Map)This is the strict hierarchy of your local server. If a file is in the wrong place here, the link breaks.Plaintext/website/  <-- [ROOT]
+│
+├── index.html           [THE BRAIN] The structure and content.
+│
+├── assets/              [THE ENGINE]
+│   ├── css/
+│   │   └── style.css    [THE SKIN] Styling, layout, glassmorphism, animations.
+│   │
+│   └── js/              [THE LOGIC]
+│       ├── script.js    [THE CONDUCTOR] Your custom logic (Loader, Audio, Hover).
+│       └── vendor/      [THE TOOLS] External libraries (Download these manually).
+│           ├── gsap.min.js
+│           ├── lenis.min.js
+│           └── ScrollToPlugin.min.js
+│
+├── fonts/               [THE VOICE] Local font files (No Google Fonts requests).
+│   ├── Syne-ExtraBold.woff2
+│   ├── Syne-Regular.woff2
+│   └── SpaceMono-Regular.woff2
+│
+└── [MEDIA ASSETS]       [THE VISUALS]
+    ├── music.mp3        (Background Audio)
+    ├── tab_logo.svg     (Favicon)
+    ├── logo.svg         (Nav Logo)
+    ├── me.webp          (Profile Photo)
+    ├── 4.webp           (Default Background / Hero)
+    ├── 1.webp           (Project Background 1)
+    ├── 2.webp           (Project Background 2)
+    └── 3.webp           (Project Background 3)
+2. The Logical Layer (User Journey)This maps the content flow inside index.html. Every section has a specific psychological purpose in the user experience.SectionContentPurposeTechnical Dependecy0. Loader"GHAIDAK ALOSH"Masking: Hides the site while assets load. Prevents FOUC (Flash of Unstyled Content).script.js removes this on load.1. HUD (Nav)Logo, Audio Toggle, CTAControl: Persistent access to contact and audio control.script.js handles audio & scroll state.2. Backgrounds.curtain-layer (Images)Atmosphere: The changing backdrop behind the content.IntersectionObserver in JS swaps opacity.3. Hero"VISUAL DOMINANCE"The Hook: Immediate value proposition. No scroll required.style.css handles the typography.4. MarqueeClient Names (Scrolling)Social Proof: Immediate credibility via association.Pure CSS Animation.5. ServicesStrategy / Visual / DigitalThe Offer: Defining exactly what you sell.CSS Grid.6. PortfolioList of 5 ProjectsThe Evidence: Interactive links to case studies.Hovering triggers data-bg swaps in JS.7. Reviews3 Client TestimonialsTrust: Third-party validation of your work.CSS Grid.8. ProfilePhoto, Bio, Stats, SocialsThe Architect: Humanizing the brand. The "Closer."me.webp image.9. FooterCopyright, LocationClosure: Legal and final anchor.Semantic HTML.3. The Functional Layer (Interaction Map)How the code talks to itself.A. The Font Chainindex.html → links style.css → @font-face imports ../fonts/Syne.woff2.Risk: If the font folder is named Font instead of fonts (case sensitive), typography breaks.B. The Scroll ChainUser Scrolls → lenis.min.js smooths the value → script.js listens to the value.If scrollY > 50px: Nav becomes solid black.If scrollY > 500px: "Back to Top" button appears.C. The Image Swap Chain (The Complex Part)User hovers or scrolls to .project-item (e.g., Novatech).HTML Element has data-bg="bg-1".script.js reads this ID.script.js finds <img id="bg-1"> in the .curtain-layer.Action: Adds class .active-project to that image (Opacity: 0.3).Action: Removes .active-project from all other images.

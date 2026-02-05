@@ -3,211 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Ghaidak Alosh | Director</title>
+    <title>Ghaidak Alosh | Brand Director</title>
+    <meta name="description" content="Strategic identity systems for total market authority. Brand Director based in Syria & UAE.">
+
+    <meta property="og:title" content="Ghaidak Alosh | Brand Director">
+    <meta property="og:description" content="Strategic identity systems for total market authority. Brand Director based in Syria & UAE.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#050505">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicRecording",
+      "name": "Atmospheric Piano Identity",
+      "author": { "@type": "Person", "name": "Ghaidak Alosh" },
+      "genre": "Classical Ambient",
+      "duration": "PT3M20S", 
+      "description": "Sonic identity layer for Ghaidak Alosh Portfolio."
+    }
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="tab_logo.svg">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="./fonts/Syne-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" as="image" href="4.webp" fetchpriority="high">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <noscript><style>#loader{display:none!important}</style></noscript>
 </head>
 <body>
 
-    <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-outline" data-cursor-outline></div>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <div class="loader-screen" id="loader">
-        <div class="loader-text">
-            <span>SYSTEM_CHECK... OK</span><br>
-            <span>LOADING_ASSETS... OK</span><br>
-            <span>ESTABLISHING_UPLINK...</span>
+    <div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
+    <div class="cursor-outline" data-cursor-outline aria-hidden="true"></div>
+
+    <button id="scrollTop" class="scroll-top-btn" aria-label="Scroll to top">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <audio id="bg-audio" preload="none" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="loader-screen" id="loader" aria-hidden="true">
+        <div class="loader-content">
+            <div class="loader-title" aria-label="Ghaidak Alosh">GHAIDAK ALOSH</div>
+            <div class="loader-meta">
+                <span>BRAND DIRECTOR</span><span class="sep" aria-hidden="true">//</span><span>SYRIA — UAE</span>
+            </div>
         </div>
     </div>
 
-    <div class="noise-overlay"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="curtain-layer" aria-hidden="true">
+        <img src="4.webp" id="bg-default" class="curtain-img default-visible" alt="" 
+             width="800" height="1000" 
+             fetchpriority="high" decoding="sync" 
+             sizes="(max-width: 768px) 100vw, 100vw"
+             style="will-change: transform, opacity; content-visibility: auto;">
 
-    <div class="curtain-layer">
-        <img src="4.jpg" id="bg-default" class="curtain-img active" alt="Default"> 
-        <img src="4.jpg" id="bg-1" class="curtain-img" alt="Novatech">
-        <img src="1.jpg" id="bg-2" class="curtain-img" alt="Wade">
-        <img src="3.jpg" id="bg-3" class="curtain-img" alt="Lumi">
-        <img src="2.jpg" id="bg-4" class="curtain-img" alt="Klein">
-        <img src="5.jpg" id="bg-5" class="curtain-img" alt="Violet">
-        <div class="vignette"></div> 
+        <img src="4.webp" id="bg-1" class="curtain-img" alt="" width="800" height="1000" loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 100vw">
+        <img src="1.webp" id="bg-2" class="curtain-img" alt="" width="800" height="1000" loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 100vw">
+        <img src="3.webp" id="bg-3" class="curtain-img" alt="" width="800" height="1000" loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 100vw">
+        <img src="2.webp" id="bg-4" class="curtain-img" alt="" width="800" height="1000" loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 100vw">
+        <img src="5.webp" id="bg-5" class="curtain-img" alt="" width="800" height="1000" loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 100vw">
+        <div class="vignette"></div>
     </div>
 
-    <nav class="hud-nav glass-panel">
-        <div class="hud-item">
-            <img src="logo.svg" alt="Ghaidak Alosh" class="nav-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-            <span class="nav-fallback" style="display:none; font-family: 'Syne'; font-weight: 800; letter-spacing: -1px; font-size: 1.2rem;">GHAIDAK.</span>
+    <nav class="hud-nav glass-panel" aria-label="Primary">
+        <div class="hud-item hud-left">
+            <img src="logo.svg" alt="Ghaidak Alosh" class="nav-logo" width="160" height="48" decoding="async"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <span class="nav-fallback" style="display:none; font-family: 'Syne'; font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em;">GHAIDAK.</span>
         </div>
-        <a href="#contact" class="hud-item text-right hover-trigger" style="text-decoration: none; color: inherit;">
-            <span class="status-dot"></span> [ INITIALIZE ]
-        </a>
+
+        <div class="hud-right-group">
+            <button class="nav-audio-btn" id="soundToggle" aria-label="Toggle Audio">
+                <div class="eq-mini">
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                </div>
+                <span class="audio-text">AUDIO</span>
+            </button>
+
+            <a href="mailto:studio@ghaidak.com" class="hud-item nav-cta hover-trigger btn-gold" aria-label="Book a consultation">
+                <span class="btn-full">BOOK CONSULTATION</span>
+                <span class="btn-short" aria-hidden="true">CONSULT</span>
+            </a>
+        </div>
     </nav>
 
-    <main>
-        
+    <main id="main-content">
         <section class="hero-section">
             <h1 class="mega-type">
                 <span class="reveal-text">VISUAL</span><br>
-                <span class="indent reveal-text">WARFARE</span>
+                <span class="indent reveal-text">DOMINANCE</span>
             </h1>
+
             <div class="hero-meta">
-                <p>Most brands whisper. I make them scream.<br>Strategic identity systems for market dominance.</p>
-                <a href="#contact" class="btn-terminal hover-trigger" style="padding: 1rem 2rem; width: auto; display: inline-block; font-size: 0.8rem;">[ DEPLOY PROJECT ]</a>
+                <p>Strategic identity systems for total market authority.<br>Most brands beg for attention. Yours will command it.</p>
+
+                <div class="hero-cta-group">
+                    <a href="#contact" class="btn-terminal hover-trigger" aria-label="Initiate Project">INITIATE PROJECT</a>
+                    <span class="cta-note">Private engagements only.</span>
+                </div>
             </div>
         </section>
 
-        <section class="marquee-section">
+        <section class="marquee-section" aria-hidden="true" style="content-visibility: auto;">
             <div class="marquee-track">
                 <div class="marquee-content">
                     <span>NOVATECH</span> <span class="divider">/</span>
                     <span>WADE FIT</span> <span class="divider">/</span>
-                    <span>LUMI</span> <span class="divider">/</span>
-                    <span>ORION</span> <span class="divider">/</span>
-                    <span>VORTEX</span> <span class="divider">/</span>
-                    <span>CYBERDYNE</span> <span class="divider">/</span>
-                     <span>NOVATECH</span> <span class="divider">/</span>
-                     <span>WADE FIT</span> <span class="divider">/</span>
-                     <span>LUMI</span> <span class="divider">/</span>
-                     <span>ORION</span> <span class="divider">/</span>
-                     <span>VORTEX</span> <span class="divider">/</span>
-                     <span>CYBERDYNE</span> <span class="divider">/</span>
+                    <span>SYRPRONET</span> <span class="divider">/</span>
+                    <span>CLIENTERO</span> <span class="divider">/</span>
+                    <span>AL NARJIS</span> <span class="divider">/</span>
+                    <span>FINTECH</span> <span class="divider">/</span>
+                    <span>FITNESS</span> <span class="divider">/</span>
+                    <span>AGENCY</span> <span class="divider">/</span>
+                    <span>SAAS</span> <span class="divider">/</span>
+                    <span>RETAIL</span> <span class="divider">/</span>
+                    <span>NOVATECH</span> <span class="divider">/</span>
+                    <span>WADE FIT</span> <span class="divider">/</span>
+                    <span>SYRPRONET</span> <span class="divider">/</span>
+                    <span>CLIENTERO</span> <span class="divider">/</span>
+                    <span>AL NARJIS</span> <span class="divider">/</span>
                 </div>
             </div>
         </section>
 
-        <section class="services-section">
+        <section class="services-section" style="content-visibility: auto;">
             <div class="section-header">
-                <span>SYSTEM (01)</span>
-                <span>CAPABILITIES</span>
+                <h2><span>CAPABILITIES (01)</span><span>Strategy. Visual. Digital.</span></h2>
             </div>
             <div class="services-grid">
-                <div class="service-item glass-panel hover-trigger">
-                    <h3>STRATEGY</h3>
-                    <ul>
-                        <li>Brand Positioning</li>
-                        <li>Market Analysis</li>
-                        <li>Verbal Identity</li>
-                    </ul>
+                <div class="service-item glass-panel">
+                    <h3>STRATEGY</h3><ul><li>Market Penetration</li><li>Brand Positioning</li><li>Verbal Identity Systems</li></ul>
                 </div>
-                <div class="service-item glass-panel hover-trigger">
-                    <h3>VISUAL</h3>
-                    <ul>
-                        <li>Logo Systems</li>
-                        <li>Art Direction</li>
-                        <li>Packaging Design</li>
-                    </ul>
+                <div class="service-item glass-panel">
+                    <h3>VISUAL</h3><ul><li>Identity Systems</li><li>Art Direction</li><li>Packaging & Print</li></ul>
                 </div>
-                <div class="service-item glass-panel hover-trigger">
-                    <h3>DIGITAL</h3>
-                    <ul>
-                        <li>Web Design (UX/UI)</li>
-                        <li>Motion Graphics</li>
-                        <li>Social Systems</li>
-                    </ul>
+                <div class="service-item glass-panel">
+                    <h3>DIGITAL</h3><ul><li>UX/UI Architecture</li><li>Dynamic Brand Assets</li><li>Audience Capture</li></ul>
                 </div>
             </div>
         </section>
 
-        <section class="list-section">
+        <section class="list-section" id="work" style="content-visibility: auto;">
             <div class="section-header">
-                <span>INDEX (05)</span>
-                <span>SELECTED CASE FILES</span>
+                <h2><span>PORTFOLIO (05)</span><span>SELECTED CASE STUDIES</span></h2>
             </div>
-
-            <a href="#" class="project-item hover-trigger" data-bg="bg-1">
+            <a href="https://www.behance.net/gallery/234138399/NovaTech-Solutions" target="_blank" rel="noopener" class="project-item hover-trigger" data-bg="bg-1" aria-label="View Novatech Project">
                 <div class="p-meta">01 / FINTECH</div>
-                <div class="p-title">NOVATECH <span class="arrow">↗</span></div>
-                <div class="p-tags">VISUAL LANGUAGE • SERIES A</div>
+                <div class="p-title">NOVATECH <span class="arrow" aria-hidden="true">↗</span></div>
             </a>
-
-            <a href="#" class="project-item hover-trigger" data-bg="bg-2">
+            <a href="https://www.behance.net/gallery/144161981/Wade-Fit-Studio-Logo" target="_blank" rel="noopener" class="project-item hover-trigger" data-bg="bg-2" aria-label="View Wade Fit Studio Project">
                 <div class="p-meta">02 / FITNESS</div>
-                <div class="p-title">WADE FIT <span class="arrow">↗</span></div>
-                <div class="p-tags">IDENTITY SYSTEM • 3D</div>
+                <div class="p-title">WADE FIT STUDIO <span class="arrow" aria-hidden="true">↗</span></div>
             </a>
-
-            <a href="#" class="project-item hover-trigger" data-bg="bg-3">
+            <a href="https://www.behance.net/gallery/162997763/LUMI-Creative-Agency-Logo" target="_blank" rel="noopener" class="project-item hover-trigger" data-bg="bg-3" aria-label="View Lumi Creative Project">
                 <div class="p-meta">03 / AGENCY</div>
-                <div class="p-title">LUMI CREATIVE <span class="arrow">↗</span></div>
-                <div class="p-tags">REBRAND • STRATEGY</div>
+                <div class="p-title">LUMI CREATIVE <span class="arrow" aria-hidden="true">↗</span></div>
             </a>
-
-            <a href="#" class="project-item hover-trigger" data-bg="bg-4">
-                <div class="p-meta">04 / RETAIL</div>
-                <div class="p-title">KLEIN GREEN <span class="arrow">↗</span></div>
-                <div class="p-tags">SIGNAGE • WAYFINDING</div>
+            <a href="https://www.behance.net/ghaidakalo5fb4" target="_blank" rel="noopener" class="project-item hover-trigger" data-bg="bg-4" aria-label="View Clientero Project">
+                <div class="p-meta">04 / SAAS</div>
+                <div class="p-title">CLIENTERO <span class="arrow" aria-hidden="true">↗</span></div>
             </a>
-
-            <a href="#" class="project-item hover-trigger" data-bg="bg-5">
-                <div class="p-meta">05 / BEAUTY</div>
-                <div class="p-title">VIOLET AURA <span class="arrow">↗</span></div>
-                <div class="p-tags">PACKAGING • SOCIAL</div>
+            <a href="https://www.behance.net/gallery/188005453/Al-Nargis-Beauty-Brand-Identity" target="_blank" rel="noopener" class="project-item hover-trigger" data-bg="bg-5" aria-label="View Al Narjis Project">
+                <div class="p-meta">05 / RETAIL</div>
+                <div class="p-title">AL NARJIS <span class="arrow" aria-hidden="true">↗</span></div>
             </a>
         </section>
 
-        <section class="testimonials-section">
+        <section class="testimonials-section" style="content-visibility: auto;">
             <div class="section-header">
-                <span>INTEL (03)</span>
-                <span>ENDORSEMENTS</span>
+                <h2><span>REPUTATION (03)</span><span>CLIENT VOICES</span></h2>
             </div>
             <div class="reviews-grid">
                 <div class="review-card glass-panel">
-                    <div class="stars">★★★★★</div>
-                    <p class="review-text">"Ghaidak doesn't just design; he engineers the brand's soul. Our conversion rate doubled."</p>
-                    <div class="review-author">
-                        <strong>SARAH J.</strong>
-                        <span>CMO, NOVATECH</span>
-                    </div>
+                    <div class="stars" aria-label="5 stars">★★★★★</div>
+                    <p class="review-text">"It’s rare to find premium quality combined with speed. Deadlines are respected. Delivery is production-ready."</p>
+                    <div class="review-author"><strong>EMAD AL TAYEB</strong><span>FOUNDER, CLIENTERO</span></div>
                 </div>
                 <div class="review-card glass-panel">
-                    <div class="stars">★★★★★</div>
-                    <p class="review-text">"A lethal combination of strategy and aesthetics. He saved us months of wasted dev time."</p>
-                    <div class="review-author">
-                        <strong>MARK R.</strong>
-                        <span>FOUNDER, WADE FIT</span>
-                    </div>
+                    <div class="stars" aria-label="5 stars">★★★★★</div>
+                    <p class="review-text">"He listens deeply, challenges ideas honestly, and delivers at a very high level."</p>
+                    <div class="review-author"><strong>TROYE SIADIAN</strong><span>CEO, NOVAKEPLER LLC</span></div>
+                </div>
+                <div class="review-card glass-panel">
+                    <div class="stars" aria-label="5 stars">★★★★★</div>
+                    <p class="review-text">"His work feels alive. Strategic, sharp, and executed with precision."</p>
+                    <div class="review-author"><strong>SALIM ALBITAR</strong><span>LINKEDIN CONSULTANT</span></div>
                 </div>
             </div>
         </section>
 
-        <section class="profile-section" id="contact">
+        <section class="profile-section" id="contact" style="content-visibility: auto;">
             <div class="profile-content">
-                <div class="profile-header">
-                    <h2>THE<br>ARCHITECT</h2>
-                </div>
-                
+                <div class="profile-header"><h2>THE<br>ARCHITECT</h2></div>
+
                 <div class="profile-grid-new">
-                    <div class="img-container hover-trigger">
-                        <img src="me.png" alt="Director">
+                    <div class="img-container">
+                        <img src="me.webp" alt="Ghaidak Alosh Director" width="500" height="500" loading="lazy" decoding="async">
                     </div>
-                    
+
                     <div class="bio-container">
-                        <p class="bio-text">Stop hiring "designers." You need a strategic partner who understands that brand identity is a financial asset, not a decoration.</p>
-                        
+                        <div class="bio-top">
+                            <h3 class="bio-title">GHAIDAK ALOSH — DIRECTOR</h3>
+                            <p class="bio-text">Stop hiring decorators. Hire a strategic partner.<br>Brand identity is a financial asset. Engineer it like one.</p>
+                        </div>
+
                         <div class="stats-row">
                             <div class="stat">
-                                <span class="val">$15k+</span>
-                                <span class="label">AVG ENGAGEMENT</span>
+                                <span class="val">150+</span>
+                                <span class="label">GLOBAL PROJECTS</span>
                             </div>
                             <div class="stat">
                                 <span class="val">4 WKS</span>
-                                <span class="label">TURNAROUND</span>
+                                <span class="label">TYPICAL SPRINT</span>
                             </div>
                         </div>
 
                         <div class="contact-links">
-                            <a href="mailto:ghaidakalosh008@gmail.com" class="btn-terminal hover-trigger">
-                                [ EMAIL: ENCRYPTED ]
+                            <a href="mailto:studio@ghaidak.com" class="btn-gold hover-trigger btn-wide">
+                                INQUIRE FOR AVAILABILITY
                             </a>
                             <div class="social-row">
-                                <a href="https://www.linkedin.com/in/ghaidakalosh/" target="_blank" class="social-link hover-trigger">LINKEDIN_NET</a>
-                                <a href="https://www.behance.net/ghaidakalosh" target="_blank" class="social-link hover-trigger">BEHANCE_LOG</a>
+                                <a href="https://www.linkedin.com/in/ghaidak-alosh/" target="_blank" rel="noopener" class="social-link hover-trigger">LINKEDIN</a>
+                                <a href="https://www.behance.net/ghaidakalo5fb4" target="_blank" rel="noopener" class="social-link hover-trigger">BEHANCE</a>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
     </main>
@@ -215,11 +251,12 @@
     <footer class="site-footer">
         <div class="footer-left">© 2026 GHAIDAK ALOSH.</div>
         <div class="footer-center">SYRIA // UAE</div>
-        <div class="footer-right">SCROLL TO TOP [↑]</div>
+        <div class="footer-right">ALL RIGHTS RESERVED</div>
     </footer>
 
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="script.js"></script>
+    <script src="assets/js/vendor/lenis.min.js"></script>
+    <script src="assets/js/vendor/gsap.min.js"></script>
+    <script src="assets/js/vendor/ScrollToPlugin.min.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
