@@ -38,11 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
 
-    // 3. Loader Logic
+    // 3. Loader Logic (NIELSEN OPTIMIZED)
     if (loader) {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let isHidden = false; // Idempotency flag to prevent double-firing
 
         const hideLoader = () => {
+            if (isHidden) return; // Prevent race conditions
+            isHidden = true;
+
             if (reduceMotion || !window.gsap) {
                 loader.style.display = 'none';
                 return;
@@ -61,15 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
               }, "-=0.2");
         };
 
-        // LCP Optimization: Immediate hide on mobile
-        if (isMobile) {
-            requestAnimationFrame(hideLoader);
-        } else {
-            setTimeout(hideLoader, 300);
-        }
-        
-        // Safety timeout
-        setTimeout(() => { if(loader.style.display !== 'none') loader.style.display = 'none'; }, 2500);
+        // SPEED: Fire immediately when the page is fully loaded
+        window.addEventListener('load', hideLoader);
+
+        // SAFETY: If the load event hangs/fails, force show after 1000ms
+        setTimeout(hideLoader, 1000);
     }
 
     // 4. Scroll Logic (State Caching to reduce DOM hits)
